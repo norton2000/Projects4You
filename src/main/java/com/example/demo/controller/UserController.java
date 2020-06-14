@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.Credentials;
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.services.CredentialsService;
 import com.example.demo.services.UserService;
 import com.example.demo.validator.UserValidator;
@@ -108,7 +107,7 @@ public class UserController {
     	if(!errors.hasErrors()) {
     		userLoggato.setFirstname(newValues.getFirstname());
     		userLoggato.setLastname(newValues.getLastname());
-    		this.userService.updateProfile(userLoggato);
+    		this.userService.saveUser(userLoggato);
     		model.addAttribute("credentials", this.sessionData.getLoggedCredentials());
     		model.addAttribute("loggedUser", userLoggato);
     		return "userProfile";

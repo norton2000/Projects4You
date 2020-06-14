@@ -44,11 +44,7 @@ public class UserService {
 		return userRepository.findByVisibleProjects(project);
 	}
 	
-	@Transactional
-	public void updateProfile(User user) {
-		this.userRepository.updateUserProfile(user.getId(), user.getFirstname(), user.getLastname());
-		System.out.println(user.getLastUpdateTimestamp());
-	}
+	
 	
 	
 }

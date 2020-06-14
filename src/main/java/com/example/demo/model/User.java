@@ -17,7 +17,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "users")
@@ -116,10 +115,7 @@ public class User {
 		this.creationTimestamp = creationTimestamp;
 	}
 	
-	@PreUpdate
-	public void OnUpdate() {
-		this.lastUpdateTimestamp = LocalDateTime.now();
-	}
+	
 
 	@Override
 	public int hashCode() {
