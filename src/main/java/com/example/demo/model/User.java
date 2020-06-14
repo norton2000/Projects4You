@@ -13,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "users")
@@ -37,6 +41,7 @@ public class User {
 	@Column(updatable = false)
 	private LocalDateTime creationTimestamp;
 	
+	@UpdateTimestamp
 	private LocalDateTime lastUpdateTimestamp;
 	
 	public User() {
@@ -106,8 +111,14 @@ public class User {
 		return creationTimestamp;
 	}
 
+	
 	public void setCreationTimestamp(LocalDateTime creationTimestamp) {
 		this.creationTimestamp = creationTimestamp;
+	}
+	
+	@PreUpdate
+	public void OnUpdate() {
+		this.lastUpdateTimestamp = LocalDateTime.now();
 	}
 
 	@Override

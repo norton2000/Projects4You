@@ -3,7 +3,6 @@
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="https://www.thymeleaf.org">
 <head th:replace = "fragments/base.html :: head">
-	<title>TaskManager</title>
 </head>
 <body>
 <h1>Your Profile</h1>
@@ -12,9 +11,13 @@
 		<tr><td>First Name</td><td th:text="${loggedUser.firstname}"></td></tr>
 		<tr><td>Last Name</td><td th:text="${loggedUser.lastname}"></td></tr>
 		<tr><td>Role</td><td th:text="${credentials.role}"></td></tr>
-		<tr><td>Registered at:</td><td th:text="${loggedUser.creationTimestamp}"></td></tr>
-		<tr><td>Last Update at:</td><td th:text="${loggedUser.lastUpdateTimestamp}"></td></tr>
+		<tr th:object ="${loggedUser.creationTimestamp}"><td>Registered at:</td><td  th:text="*{dayOfMonth}+'/'+*{month}+'/'+*{year}+' - '+*{hour}+' : '+*{minute}"></td></tr>
+		<tr th:object ="${loggedUser.lastUpdateTimestamp}"><td>Last Update at:</td><td th:text="*{dayOfMonth}+'/'+*{month}+'/'+*{year}+' - '+*{hour}+' : '+*{minute}"></td></tr>
 	</table>
+	
+	<a th:href="@{/users/modify}">Modifica Profilo</a>
+	
 	<footer th:replace = "fragments/base.html :: pagesFooter"></footer>
 </body>
 </html>
+

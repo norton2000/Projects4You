@@ -4,12 +4,17 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +23,7 @@ import com.example.demo.model.Credentials;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.CredentialsService;
+import com.example.demo.services.UserService;
 import com.example.demo.validator.UserValidator;
 
 
@@ -28,12 +34,13 @@ import com.example.demo.validator.UserValidator;
 public class UserController {
 
 
-    @Autowired
-    UserRepository userRepository;
-
+  
 
     @Autowired
     UserValidator userValidator;
+    
+    @Autowired
+    UserService userService;
 
 
     @Autowired
@@ -45,6 +52,8 @@ public class UserController {
     
     @Autowired
     CredentialsService credentialsService;
+    
+    
 
 
     /**
@@ -79,6 +88,32 @@ public class UserController {
 
 
         return "userProfile";
+    }
+    
+    @GetMapping(value = {"/users/modify"})
+    public String getModifyUserPage(Model model) {
+    	User userLoggato = this.sessionData.getLoggedUser();
+    	User user = new User(userLoggato.getFirstname()	, userLoggato.getLastname());
+    	model.addAttribute("newValues", user); 	
+    	return "modificaUser";
+    }
+    
+    @PostMapping(value = {"/users/modify"})
+    public String modifyUser(@Valid @ModelAttribute("newValues") User newValues,
+    						BindingResult errors,
+    						Model model) 
+    {
+    	User userLoggato = this.sessionData.getLoggedUser();
+    	this.userValidator.validate(newValues, errors);
+    	if(!errors.hasErrors()) {
+    		userLoggato.setFirstname(newValues.getFirstname());
+    		userLoggato.setLastname(newValues.getLastname());
+    		this.userService.updateProfile(userLoggato);
+    		model.addAttribute("credentials", this.sessionData.getLoggedCredentials());
+    		model.addAttribute("loggedUser", userLoggato);
+    		return "userProfile";
+    	}
+    	return "modificaUser";
     }
 
 
