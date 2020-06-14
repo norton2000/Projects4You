@@ -39,7 +39,12 @@ public class UserService {
 		return lista;
 	}
 
+	@Transactional
 	public List<User> getMembers(Project project) {
 		return userRepository.findByVisibleProjects(project);
 	}
+	
+	
+	
+	
 }

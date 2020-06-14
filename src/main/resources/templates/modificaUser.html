@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: head">
+</head>
+<body>
+	<h1>Modify Profile</h1>
+	
+	<form th:action="@{/users/modify}" method="POST">
+		<table>
+			<tr>
+				<td><label>First Name: </label> </td>
+				<td><input type="text" 
+					required th:field="${newValues.firstname}" /></td>
+			</tr>
+			<tr>
+				<td><label>Last Name: </label> </td>
+				<td><input type="text" 
+					required th:field ="${newValues.lastname}" /></td>
+			</tr>
+		</table>
+		
+		<input type="submit" name="submit" value="modificaProfilo"/>
+	</form>
+
+</body>
+
+
+</html>

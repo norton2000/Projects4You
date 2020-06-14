@@ -2,9 +2,7 @@
 <html lang="en"
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="https://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<title>TaskManager</title>
+<head th:replace = "fragments/base.html :: head">
 </head>
 <body>
 	<h1>All Users:</h1>
@@ -30,6 +28,8 @@
 			</tbody>
 			
 		</table>
+		
+		<footer th:replace = "fragments/base.html :: pagesFooter"></footer>
 	</div>
 </body>
 </html>
