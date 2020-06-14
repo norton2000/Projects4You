@@ -39,7 +39,16 @@ public class UserService {
 		return lista;
 	}
 
+	@Transactional
 	public List<User> getMembers(Project project) {
 		return userRepository.findByVisibleProjects(project);
 	}
+	
+	@Transactional
+	public void updateProfile(User user) {
+		this.userRepository.updateUserProfile(user.getId(), user.getFirstname(), user.getLastname());
+		System.out.println(user.getLastUpdateTimestamp());
+	}
+	
+	
 }

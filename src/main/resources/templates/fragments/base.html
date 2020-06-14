@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th = "http://www.thymeleaf.org">
+<html xmlns:th = "https://www.thymeleaf.org">
 	<head th:fragment = "head">
 		<meta charset="UTF-8" />
-		<link th:href="@{/static/mainStyle.css}" >
+		<link th:href="@{/css/mainStyle.css}" rel="stylesheet" />
+		<title>TaskManager</title>
 	</head>
 	<body>
 	
-		<footer th:fragment = "pagesFooter">
-			<div class="footer">
+		<footer class="footer" th:fragment = "pagesFooter">
 				<a th:href="@{../home}">Home</a>
-			</div>
 		</footer>
 	</body>
 </html>
