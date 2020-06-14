@@ -18,7 +18,7 @@
 			</tr>
 			<tr>
 				<td><label for="descriptionInput">Description</label></td>
-				<td><input id=descriptionInput placeholder="DESCRIPTION" required th:field="*{description}"/></td>
+				<td><input id=descriptionInput placeholder="DESCRIPTION" th:field="*{description}"/></td>
 				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></td>
 			</tr>
 			<tr>
