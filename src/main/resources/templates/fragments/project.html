@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="https://www.thymeleaf.org">
-<head th:fragment="projectHead" th:replace="fragments/base.html :: head">
+<head th:fragment="projectHead" >
+<th:block th:insert="fragments/base.html :: head"></th:block>
 <link th:href="@{/css/projectStyle.css}" rel="stylesheet" />
 </head>
 <body>
@@ -21,9 +22,10 @@
 		<h3>task:</h3><br/>
 		<ul>
 			<li th:fragment="taskListItem" th:each="task : ${project.tasks}">
-				<div class="taskListItem">
+				<div id="|${task.id}|" class="taskListItem">
 					<div th:text="${task.name}"></div>
 					<div th:text="${task.description}" style="color: red"></div>
+					<div><button onclick="|showComments(${task.id})|">Show Comments</button> </div>
 				</div>
 			</li>
 		</ul>

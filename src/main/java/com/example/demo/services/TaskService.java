@@ -26,6 +26,7 @@ public class TaskService {
 	}
 	
 	public Task saveTask(Task task) {
+		task.updateLastUpdateTimestamp();
 		return this.taskRepository.save(task);
 	}
 	

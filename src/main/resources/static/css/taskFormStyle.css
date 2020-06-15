@@ -1,0 +1,9 @@
+form div{
+	width: 100%;
+	margin-top: 2em;
+}
+
+#descriptionArea{
+	resize: none;
+	width: 100%;
+}
