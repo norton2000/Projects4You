@@ -14,13 +14,23 @@ import com.example.demo.repository.UserRepository;
 
 @Service
 public class UserService {
+	
+	
 	@Autowired
 	private UserRepository userRepository;
+	
+
 	
 	@Transactional
 	public User getUser(Long id) {
 		Optional<User> result = this.userRepository.findById(id);
 		return result.orElse(null);
+	}
+	
+	@Transactional
+	public User getUser(String nickname) {
+		User result = this.userRepository.findByNickname(nickname);
+		return result;
 	}
 	
 	@Transactional
@@ -43,7 +53,8 @@ public class UserService {
 	public List<User> getMembers(Project project) {
 		return userRepository.findByVisibleProjects(project);
 	}
-	
+
+
 	
 	
 	

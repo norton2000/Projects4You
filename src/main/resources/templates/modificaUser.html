@@ -4,22 +4,32 @@
 </head>
 <body>
 	<h1>Modify Profile</h1>
-	
+
 	<form th:action="@{/users/modify}" method="POST">
 		<table>
 			<tr>
-				<td><label>First Name: </label> </td>
-				<td><input type="text" 
-					required th:field="${newValues.firstname}" /></td>
+				<td><label>Nickname: </label></td>
+				<td><input type="text" required
+					th:field="${userForm.nickname}" /></td>
+				<td th:if="${#fields.hasErrors('userForm.nickname')}"
+					th:errors="${userForm.nickname}" th:style="'color:red'"></td>
 			</tr>
 			<tr>
-				<td><label>Last Name: </label> </td>
-				<td><input type="text" 
-					required th:field ="${newValues.lastname}" /></td>
+				<td><label>First Name: </label></td>
+				<td><input type="text" required
+					th:field="${userForm.firstname}" /></td>
+				<td th:if="${#fields.hasErrors('userForm.firstname')}"
+					th:errors="${userForm.firstname}" th:style="'color:red'"></td>
+			</tr>
+			<tr>
+				<td><label>Last Name: </label></td>
+				<td><input type="text" required th:field="${userForm.lastname}" /></td>
+				<td th:if="${#fields.hasErrors('userForm.lastname')}"
+					th:errors="${userForm.lastname}" th:style="'color:red'"></td>
 			</tr>
 		</table>
-		
-		<input type="submit" name="submit" value="modificaProfilo"/>
+
+		<input type="submit" name="submit" value="modificaProfilo" />
 	</form>
 
 </body>

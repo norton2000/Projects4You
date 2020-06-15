@@ -2,8 +2,6 @@ package com.example.demo.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +13,15 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	
 	public List<User> findByVisibleProjects(Project project);
 	
+	public User findByNickname(String nickname);
+
+	/*
+	@Query(value = "SELECT u FROM users u "
+			+ "WHERE u.id != ?2 AND NOT EXISTS (SELECT mem FROM project_members mem "
+														+ "WHERE mem.visible_projects_id = ?1 AND mem.members_id = u.id)", 
+														nativeQuery = true)
+	public List<User> getUsersWhoCanShare(Long project_id, Long owner_id);
 	
-	@Modifying(clearAutomatically = true)
-	@Query("UPDATE User u SET u.firstname = ?2, u.lastname = ?3 WHERE u.id = ?1")
-	public void updateUserProfile(Long id, String firstname, String lastname);
+	*/
+	
 }

@@ -10,12 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.controller.session.SessionData;
+import com.example.demo.model.Credentials;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
+import com.example.demo.services.CredentialsService;
 import com.example.demo.services.ProjectService;
 import com.example.demo.services.UserService;
 import com.example.demo.validator.ProjectValidator;
@@ -28,6 +31,9 @@ public class ProjectController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CredentialsService credentialSerivce;
 	
 	@Autowired
 	ProjectValidator projectValidator;
@@ -45,7 +51,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = {"/projects/{projectId}"}, method = RequestMethod.GET)
-	public String project(Model model, @PathVariable Long projectId) {
+	public String visualizzaProjectOwned(Model model, @PathVariable Long projectId) {
 		User loggedUser = sessionData.getLoggedUser();
 		Project project = projectService.getProject(projectId);
 		if(project == null)
@@ -58,8 +64,9 @@ public class ProjectController {
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
+		model.addAttribute("userToShare", new Credentials()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto
 		
-		return "project";
+		return "projectOwned";
 	}
 	
 	@RequestMapping(value = {"/projects/add"}, method = RequestMethod.GET)
@@ -84,4 +91,63 @@ public class ProjectController {
 		model.addAttribute("loggedUser", loggedUser);
 		return "addProject";
 	}
+	
+	
+	@PostMapping(value = {"projects/{id}/share"})
+	public String shareProject(@PathVariable("id") Long id_progetto,
+							  @ModelAttribute("userToShare") Credentials userToShareUsername,
+							  BindingResult errors,
+							  Model model) {
+		
+		//Prendo i dati che serviranno, e ripreparo i dati di base per la pagina
+		User loggedUser = this.sessionData.getLoggedUser();
+		Project project = this.projectService.getProject(id_progetto);
+		List<User> members = userService.getMembers(project);
+		model.addAttribute("loggedUser", loggedUser);
+		model.addAttribute("project", project);
+		model.addAttribute("members", members);
+		
+	
+		Credentials userToShareCred = this.credentialSerivce.getCredentials(userToShareUsername.getUsername());
+		if(userToShareCred == null) {
+			errors.rejectValue("username", "notExists");
+			return "projectOwned";
+		}
+		User userToShare = userToShareCred.getUser();
+		
+		//Se sto cercando di condividere con me stesso o se chi cerco è già membro del progetto
+		if(userToShare.equals(loggedUser) || members.contains(userToShare)) {
+			
+			errors.rejectValue("username", "alreadyMember");
+			return "projectOwned";
+		}
+		project.addMember(userToShare);
+		model.addAttribute("members", project.getMembers());
+		model.addAttribute("userToShare", new Credentials());
+		this.projectService.saveProject(project);
+		
+		return "projectOwned";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
