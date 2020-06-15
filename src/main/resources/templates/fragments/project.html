@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head th:fragment="projectHead" th:replace="fragments/base.html :: head">
+<link th:href="@{/css/projectStyle.css}" rel="stylesheet" />
+</head>
+<body>
+	<div th:fragment="intestazioneProject">
+		<h1 th:text="${project.name}"></h1>
+		<h1 th:text="${project.description}" style="color: gray"></h1>
+		<div th:if="${members.size() > 0}">
+			<h3>Shared with:</h3>
+			<ul>
+				<li th:each="member : ${members}">
+					<div th:text="${member.firstname} + ' ' + ${member.lastname}"></div>
+			</ul>
+		</div>
+	</div>
+
+	<div th:fragment = "elencoTaskCompleto">
+		<h3>task:</h3><br/>
+		<ul>
+			<li th:fragment="taskListItem" th:each="task : ${project.tasks}">
+				<div class="taskListItem">
+					<div th:text="${task.name}"></div>
+					<div th:text="${task.description}" style="color: red"></div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+
+
+	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/project.html :: projectHead">
+</head>
+
+<body>
+	<div th:replace="fragments/project.html :: intestazioneProject">
+	</div>
+
+ 
+	<div>
+		<h4>Share with another user</h4>
+		<form th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
+			<label for="usernameInput">Insert username: </label><input id="usernameInput" type="text" placeholder="search a username" required
+				th:field="${userToShare.username}" /> <input type="submit">
+				<span th:if="${#fields.hasErrors('userToShare.username')}"
+					th:errors="${userToShare.username}" th:style="'color:red'"></span>
+		</form>
+	</div>
+
+	<h3>Task:</h3>
+	<ul>
+		<li th:replace = "fragments/project.html :: taskListItem">
+			<div th:text="${task.name}"></div>
+		</li>
+	</ul>
+	
+	<footer th:replace = "fragments/base.html :: pagesFooter" ></footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

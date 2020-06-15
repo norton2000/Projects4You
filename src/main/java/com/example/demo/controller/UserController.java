@@ -93,12 +93,12 @@ public class UserController {
     public String getModifyUserPage(Model model) {
     	User userLoggato = this.sessionData.getLoggedUser();
     	User user = new User(userLoggato.getFirstname()	, userLoggato.getLastname());
-    	model.addAttribute("newValues", user); 	
+    	model.addAttribute("userForm", user); 	
     	return "modificaUser";
     }
     
     @PostMapping(value = {"/users/modify"})
-    public String modifyUser(@Valid @ModelAttribute("newValues") User newValues,
+    public String modifyUser(@Valid @ModelAttribute("userForm") User newValues,
     						BindingResult errors,
     						Model model) 
     {

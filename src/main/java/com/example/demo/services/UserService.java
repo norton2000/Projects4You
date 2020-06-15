@@ -14,8 +14,13 @@ import com.example.demo.repository.UserRepository;
 
 @Service
 public class UserService {
+	
+	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ProjectService projectService;
 	
 	@Transactional
 	public User getUser(Long id) {
@@ -43,6 +48,17 @@ public class UserService {
 	public List<User> getMembers(Project project) {
 		return userRepository.findByVisibleProjects(project);
 	}
+
+	/**
+	 * Metodo che inzia lo sharing di un progetto e ritorna tutti gli 
+	 * User con cui è possibile condividere il progetto
+	 * @param project
+	 * @return
+	 */
+	/*public List<User> startSharingProject(Project project) {
+		
+		return this.userRepository.getUsersWhoCanShare(project.getId(), project.getOwner().getId());
+	}*/
 	
 	
 	

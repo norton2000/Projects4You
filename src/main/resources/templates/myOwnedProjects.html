@@ -17,6 +17,7 @@
 		<tr th:each="project : ${projectsList}">
 			<td><a th:href="'/projects/' + ${project.id}" th:text="${project.name}"></a></td>
 			<td th:text="${project.description}"></td>
+			<!-- <td><form th:action="@{'../projects/'+${project.id}+'/share'}" method="GET"><button type="submit" >SHARE</button> </form> -->
 		</tr>
 		</tbody>
 	</table>
