@@ -10,6 +10,13 @@
 
 		<table>
 			<tr>
+				<td><label for="nicknameInput">Nickname</label></td>
+				<td><input id=nicknameInput type="text" placeholder="NICKNAME"
+					required th:field="${userForm.nickname}" /></td>
+				<td th:if="${#fields.hasErrors('userForm.nickname')}"
+					th:errors="${userForm.nickname}" th:style="'color:red'"></td>
+			</tr>
+			<tr>
 				<td><label for="usernameInput">Username</label></td>
 				<td><input id=usernameInput type="text" placeholder="USERNAME"
 					required th:field="${credentialsForm.username}" /></td>

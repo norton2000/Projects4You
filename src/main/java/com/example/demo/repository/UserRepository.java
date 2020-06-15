@@ -12,6 +12,8 @@ import com.example.demo.model.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 	
 	public List<User> findByVisibleProjects(Project project);
+	
+	public User findByNickname(String nickname);
 
 	/*
 	@Query(value = "SELECT u FROM users u "

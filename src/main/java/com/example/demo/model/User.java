@@ -24,6 +24,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false, length = 100, unique = true)
+	private String nickname;
+	
 	@Column(nullable=false, length = 100)
 	private String firstname;
 	
@@ -145,5 +148,13 @@ public class User {
 		} else if (!lastname.equals(other.lastname))
 			return false;
 		return true;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 }

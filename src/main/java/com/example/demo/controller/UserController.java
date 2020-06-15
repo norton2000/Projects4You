@@ -107,6 +107,7 @@ public class UserController {
     	if(!errors.hasErrors()) {
     		userLoggato.setFirstname(newValues.getFirstname());
     		userLoggato.setLastname(newValues.getLastname());
+    		userLoggato.setNickname(newValues.getNickname());
     		this.userService.saveUser(userLoggato);
     		model.addAttribute("credentials", this.sessionData.getLoggedCredentials());
     		model.addAttribute("loggedUser", userLoggato);

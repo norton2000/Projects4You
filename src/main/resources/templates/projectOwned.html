@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/project.html :: projectHead">
+<head>
+<th:block th:insert="fragments/project.html :: projectHead"></th:block>
+<link th:href="@{/css/projectOwnedStyle.css}" rel="stylesheet" />
 </head>
 
 <body>
+
+	<script type="text/javascript"
+		th:src="@{/javascript/projectOwnedScript.js}"></script>
 	<div th:replace="fragments/project.html :: intestazioneProject">
 	</div>
 
- 
-	<div>
-		<h4>Share with another user</h4>
-		<form th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
-			<label for="usernameInput">Insert username: </label><input id="usernameInput" type="text" placeholder="search a username" required
-				th:field="${userToShare.username}" /> <input type="submit">
-				<span th:if="${#fields.hasErrors('userToShare.username')}"
-					th:errors="${userToShare.username}" th:style="'color:red'"></span>
+
+	<button onclick="visualizzaAreaShare()">Share with another
+		user</button>
+	<div id="areaShare" hidden="true">
+		<form class="formShare"
+			th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
+			<table>
+				<tr>
+					<td><label for="usernameInput">Insert username: </label>
+					<td><input id="usernameInput" type="text"
+						placeholder="search a username" required
+						th:field="${userToShare.username}" /></td>
+					<td><span th:if="${#fields.hasErrors('userToShare.username')}"
+						th:errors="${userToShare.username}" th:style="'color:red'"></span></td>
+				<tr>
+					<td><input type="submit"></td>
+					<td><button onclick="closeAreaShare()">Close</button></td>
+				</tr>
+			</table>
 		</form>
+
 	</div>
 
 	<h3>Task:</h3>
 	<ul>
-		<li th:replace = "fragments/project.html :: taskListItem">
+		<li th:replace="fragments/project.html :: taskListItem">
 			<div th:text="${task.name}"></div>
 		</li>
 	</ul>
-	
-	<footer th:replace = "fragments/base.html :: pagesFooter" ></footer>
+
+	<footer th:replace="fragments/base.html :: pagesFooter"> </footer>
 </body>
 </html>
 

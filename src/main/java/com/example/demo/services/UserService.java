@@ -19,13 +19,18 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private ProjectService projectService;
+
 	
 	@Transactional
 	public User getUser(Long id) {
 		Optional<User> result = this.userRepository.findById(id);
 		return result.orElse(null);
+	}
+	
+	@Transactional
+	public User getUser(String nickname) {
+		User result = this.userRepository.findByNickname(nickname);
+		return result;
 	}
 	
 	@Transactional
@@ -49,17 +54,7 @@ public class UserService {
 		return userRepository.findByVisibleProjects(project);
 	}
 
-	/**
-	 * Metodo che inzia lo sharing di un progetto e ritorna tutti gli 
-	 * User con cui è possibile condividere il progetto
-	 * @param project
-	 * @return
-	 */
-	/*public List<User> startSharingProject(Project project) {
-		
-		return this.userRepository.getUsersWhoCanShare(project.getId(), project.getOwner().getId());
-	}*/
-	
+
 	
 	
 	
