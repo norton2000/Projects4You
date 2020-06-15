@@ -20,12 +20,12 @@
 			th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
 			<table>
 				<tr>
-					<td><label for="usernameInput">Insert username: </label>
-					<td><input id="usernameInput" type="text"
-						placeholder="search a username" required
-						th:field="${userToShare.username}" /></td>
-					<td><span th:if="${#fields.hasErrors('userToShare.username')}"
-						th:errors="${userToShare.username}" th:style="'color:red'"></span></td>
+					<td><label for="nicknameInput">Insert nickname: </label>
+					<td><input id="nicknameInput" type="text"
+						placeholder="insert a nickname" required
+						th:field="${userToShare.nickname}" /></td>
+					<td><span th:if="${#fields.hasErrors('userToShare.nickname')}"
+						th:errors="${userToShare.nickname}" th:style="'color:red'"></span></td>
 				<tr>
 					<td><input type="submit"></td>
 					<td><button onclick="closeAreaShare()">Close</button></td>
@@ -36,6 +36,7 @@
 	</div>
 
 	<h3>Task:</h3>
+ 	<div style="text-align: right;"><a th:href="@{'~/projects/'+${project.id}+'/tasks/add'}">Add new task</a></div>
 	<ul>
 		<li th:replace="fragments/project.html :: taskListItem">
 			<div th:text="${task.name}"></div>

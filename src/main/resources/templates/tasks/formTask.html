@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<th:block th:insert="fragments/base.html :: head"></th:block>
+<link th:href="@{/css/taskFormStyle.css}" rel="stylesheet" />
+</head>
+<body>
+	<h1>Add new Task</h1>
+	<form th:action="@{'~/projects/'+${project.id}+'/tasks/add'}" method="POST"
+		id="taskForm">
+		<div class="taskFormDiv">
+			<label for="taskName">Task name: </label>
+		</div>
+		<input type="text" required th:field="${task.name}" />
+		<div class="taskFormDiv">
+			<label for="taskDescription">Task Description:</label>
+		</div>
+		<div class="taskFormDiv">
+			<textarea id="descriptionArea" th:field="${task.description}"
+				form="taskForm" wrap="hard" rows="10" maxlength="2500"></textarea>
+		</div>
+		<div class="taskFormDiv" align="center"><input type="submit"></div>
+	</form>
+	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
+</body>
+</html>

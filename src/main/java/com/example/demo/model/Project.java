@@ -96,6 +96,10 @@ public class Project {
 		this.tasks = tasks;
 	}
 	
+	public void addTask(Task task) {
+		this.tasks.add(task);
+	}
+	
 	public void addMember(User member) {
 		this.members.add(member);
 	}

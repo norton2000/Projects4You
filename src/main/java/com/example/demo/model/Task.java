@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 public class Task {
 	@Id
@@ -18,7 +20,7 @@ public class Task {
 	@Column(nullable=false, length = 100)
 	private String name;
 	
-	@Column(nullable=false, length = 100)
+	@Column(nullable=false, length = 2500)
 	private String description;
 	
 	@Column(nullable = false)
@@ -31,6 +33,7 @@ public class Task {
 	private LocalDateTime creationTimestamp;
 	
 	@Column(nullable = false)
+	@UpdateTimestamp
 	private LocalDateTime lastUpdateTimestamp;
 	
 	public Task() {}
@@ -89,6 +92,9 @@ public class Task {
 	public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
 		this.lastUpdateTimestamp = lastUpdateTimestamp;
 	}
+	public void updateLastUpdateTimestamp() {
+		this.setLastUpdateTimestamp(LocalDateTime.now());
+	}
 
 	@Override
 	public int hashCode() {
@@ -129,6 +135,8 @@ public class Task {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }
