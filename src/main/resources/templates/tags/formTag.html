@@ -2,28 +2,53 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 <th:block th:insert="fragments/base.html :: head"></th:block>
-<link th:href="@{/css/taskFormStyle.css}" rel="stylesheet" />
+
+<link th:href="@{/css/taskFormStyle.css}" rel="stylesheet"
+	href="../../static/css/tagFormStyle.css">
 </head>
 <body>
 	<h1>Add new Tag</h1>
-	<form th:action="@{'~/projects/'+${project.id}+'/tags/add'}" method="POST"
-		id="tagForm">
+	<form th:action="@{'~/projects/'+${project.id}+'/tags/add'}"
+		method="POST" id="tagForm">
+
+		
+				<div class="area">
+					<div class="tagFormDiv">
+						<label for="tagName">Tag name: </label>
+					</div>
+
+
+					<input type="text" required th:field="${tag.name}" /> <span
+						th:if="${#fields.hasErrors('tag.name')}" th:errors="${tag.name}"
+						th:style="'color:red'"></span>
+				</div>
+
+				<div class="area">
+					<div class="tagFormDiv">
+						<label for="tagName">Tag name: </label>
+					</div>
+					<select th:field="${tag.colore}" value="prova1">
+						<!--  !!!!!!!!!!!!!!!! ATTENTO QUI CON IL NOME DELLA VARIABILE -->
+						<!--  <option th:each="${colore : colori}" th:value="colore"></option>   colori sarà la lista di stringhe, quelle sotto vanno tolte poi -->
+						<option value="prova1">Opzione prova 1</option>
+						<option value="prova2">Opzione prova 2</option>
+						<option value="prova3">Opzione prova 3</option>
+					</select>
+				</div>
+		
+
 		<div class="tagFormDiv">
-			<label for="tagName">tag name: </label>
-		</div>
-		<input type="text" required th:field="${tag.name}" />
-		<span th:if="${#fields.hasErrors('tag.name')}"
-					th:errors="${tag.name}" th:style="'color:red'"></span>
-		<div class="tagFormDiv">
-			<label for="tagDescription">tag Description:</label>
-			<span th:if="${#fields.hasErrors('tag.description')}"
-					th:errors="${tag.description}" th:style="color:red"></span>
+			<label for="tagDescription">Tag Description:</label> <span
+				th:if="${#fields.hasErrors('tag.description')}"
+				th:errors="${tag.description}" th:style="color:red"></span>
 		</div>
 		<div class="tagFormDiv">
 			<textarea id="descriptionArea" th:field="${tag.description}"
 				form="tagForm" wrap="hard" rows="10" maxlength="1000"></textarea>
 		</div>
-		<div class="tagFormDiv" align="center"><input type="submit"></div>
+		<div class="tagFormDiv" align="center">
+			<input type="submit">
+		</div>
 	</form>
 	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
 </body>
