@@ -75,7 +75,7 @@ public class ProjectController {
 		Project project = this.projectService.getProject(project_id);
 		
 		if(project == null)
-			return "redirect:/projects/myProjects";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/myProjects/";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		
 		User loggedUser = this.sessionData.getLoggedUser();
 		
@@ -122,7 +122,7 @@ public class ProjectController {
 		Project project = this.projectService.getProject(id_progetto);
 		
 		if(project == null) {
-			return "redirect:/projects"+id_progetto;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+id_progetto;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		}
 		
 		List<User> members = userService.getMembers(project);
@@ -166,7 +166,7 @@ public class ProjectController {
 		Project project = this.projectService.getProject(project_id);
 		
 		if(project == null) {
-			return "redirect:/projects"+project_id;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+project_id;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		}
 		
 		User loggedUser = this.sessionData.getLoggedUser();
