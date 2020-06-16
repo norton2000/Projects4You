@@ -62,7 +62,7 @@
 
 
 						<form th:id="|leaveCommentForm${task.id}|"
-							th:action="@{'~/project/'+${project.id}+'/tasks/'+${task.id}+'/comment'}"
+							th:action="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/comment'}"
 							hidden="true" method="POST">
 							<textarea id="commentArea" th:field="${newComment.testoCommento}"
 								th:form="|leaveCommentForm${task.id}|" wrap="hard" rows="4" maxlength="100"></textarea>

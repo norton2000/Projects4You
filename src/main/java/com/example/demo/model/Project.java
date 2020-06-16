@@ -99,6 +99,7 @@ public class Project {
 	}
 	
 	public void addTask(Task task) {
+		task.setProject(this);
 		this.tasks.add(task);
 	}
 	

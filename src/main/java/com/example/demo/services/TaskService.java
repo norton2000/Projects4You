@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.Commento;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
+import com.example.demo.repository.CommentoRepository;
 import com.example.demo.repository.TaskRepository;
 
 @Service
@@ -16,6 +17,9 @@ public class TaskService {
 	
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private CommentoRepository commentoRepository;
 	
 	@Transactional
 	public Task getTask(Long id) {
@@ -41,7 +45,7 @@ public class TaskService {
 		
 		commento.setLeavedBy(user);
 		task.addComment(commento);
-		this.taskRepository.save(task);
+		this.commentoRepository.save(commento);
 		
 	}
 }

@@ -10,7 +10,9 @@ import com.example.demo.model.User;
 
 @Repository
 public interface ProjectRepository extends CrudRepository<Project, Long> {
+	
+	
 	public List<Project> findByMembers(User member);
 	
-	public List<Project> findByOwner(User owenr);
+	public List<Project> findByOwner(User owner);
 }
