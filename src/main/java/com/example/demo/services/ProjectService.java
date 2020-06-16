@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Project;
+import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProjectRepository;
 
@@ -51,7 +52,6 @@ public class ProjectService {
 		
 		return this.projectRepository.findByMembers(user);
 	}
-
 
 	
 	
