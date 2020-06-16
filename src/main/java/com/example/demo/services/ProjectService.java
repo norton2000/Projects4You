@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Project;
+import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProjectRepository;
+import com.example.demo.repository.TaskRepository;
 
 @Service
 public class ProjectService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	@Transactional
 	public Project getProject(Long id) {
@@ -42,6 +47,21 @@ public class ProjectService {
 	public Project shareProjectWithUser(Project project, User user) {
 		project.addMember(user);
 		return this.projectRepository.save(project);
+	}
+
+	public Task getTask(Long task_id) {
+		Optional<Task> optionalTask = this.taskRepository.findById(task_id);
+		return optionalTask.orElse(null);
+	}
+
+	public void assegnaTask(Task task, User user) {
+		task.setUser(user);
+		this.taskRepository.save(task);
+	}
+
+	public void completeTask(Task task) {
+		task.setCompleted(true);
+		this.taskRepository.save(task);
 	}
 	
 	

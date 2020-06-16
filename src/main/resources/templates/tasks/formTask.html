@@ -12,8 +12,12 @@
 			<label for="taskName">Task name: </label>
 		</div>
 		<input type="text" required th:field="${task.name}" />
+		<span th:if="${#fields.hasErrors('task.name')}"
+					th:errors="${task.name}" th:style="'color:red'"></span>
 		<div class="taskFormDiv">
 			<label for="taskDescription">Task Description:</label>
+			<span th:if="${#fields.hasErrors('task.description')}"
+					th:errors="${task.description}" th:style="color:red"></span>
 		</div>
 		<div class="taskFormDiv">
 			<textarea id="descriptionArea" th:field="${task.description}"

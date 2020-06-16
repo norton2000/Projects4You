@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: head">
+</head>
+<body>
+	<h1>Assign task</h1>
+	<h3 th:text="${task.name}"></h3>
+	<ul>
+		<li>
+			<div>
+				<span th:text="${loggedUser.nickname}"></span>
+				<span th:text="${loggedUser.firstname}"></span>
+				<span th:text="${loggedUser.lastname}"></span>
+				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna/'+${loggedUser.id}}" >Assign</a>				
+			</div>
+		</li>
+		<li th:each="user : ${members}">
+			<div>
+				<span th:text="${user.nickname}"></span>
+				<span th:text="${user.firstname}"></span>
+				<span th:text="${user.lastname}"></span>
+				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna/'+${user.id}}" >Assign</a>				
+			</div>
+		</li>
+	</ul>
+</body>
+</html>
