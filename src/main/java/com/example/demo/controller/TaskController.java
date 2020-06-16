@@ -54,15 +54,21 @@ public class TaskController {
 							  Model model) 
 	{
 		Project project = this.projectService.getProject(project_id);
+		
+		if(project == null) {
+			return "redirect:/projects"+project_id;
+		}
+		
 		model.addAttribute("project", project);
 		this.taskValidator.validate(task, taskErrors);
 		if(taskErrors.hasErrors()) {
 			model.addAttribute("task", task);
 			return "tasks/formTask";
 		}
-		task.setCreationTimestamp(LocalDateTime.now());
-		project.addTask(task);
-		this.projectService.saveProject(project);
+		
+		
+		this.projectService.creaNuovoTask(project, task);
+		
 		return "redirect:/projects/"+project.getId();
 	}
 	
@@ -71,10 +77,20 @@ public class TaskController {
 									@PathVariable("task_id") Long task_id,
 									Model model) {
 		Project project = this.projectService.getProject(project_id);
+		
+		if(project == null) {
+			return "redirect:/projects"+project_id;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		model.addAttribute("project", project);
 		User loggedUser = this.sessionData.getLoggedUser();
 		List<User> members = userService.getMembers(project);
 		Task task = this.projectService.getTask(task_id);
+		
+		if(task == null) {
+			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("task", task);
 		model.addAttribute("members", members);
@@ -88,9 +104,22 @@ public class TaskController {
 								@PathVariable("user_id") Long user_id)
 	{
 		Task task = this.projectService.getTask(task_id);
+		
 		User user = this.userService.getUser(user_id);
+		
+		if(user == null || user == null) {
+			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		this.projectService.assegnaTask(task, user);
 		return "redirect:/projects/"+project_id;
+	}
+	
+	@GetMapping(value = "/projects/{project_id}/tasks/{task_id}/edit")
+	public String editTask(@PathVariable("project_id") Long project_id,
+							@PathVariable("task_id") Long task_id) 
+	{
+		return "home";
 	}
 	
 	@RequestMapping(value = "/projects/{project_id}/tasks/{task_id}/completed")
@@ -98,12 +127,17 @@ public class TaskController {
 								@PathVariable("task_id") Long task_id)
 	{
 		Task task = this.projectService.getTask(task_id);
+		
+		if(task == null) {
+			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		this.projectService.completeTask(task);
 		return "redirect:/projects/"+project_id;
 		
 	}
 	
-	@PostMapping(value = "/project/{project_id}/tasks/{task_id}/comment")
+	@PostMapping(value = "/projects/{project_id}/tasks/{task_id}/comment")
 	public String leaveComment(@PathVariable("project_id") Long project_id,
 								@PathVariable("task_id") Long task_id,
 								@ModelAttribute("newComment") Commento commento,
@@ -111,9 +145,23 @@ public class TaskController {
 								Model model)
 	{
 		Task task = this.projectService.getTask(task_id);
+		
+		if(task == null) {
+			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		User user = this.sessionData.getLoggedUser();
 		this.taskService.addComment(task, commento, user);
 		
+		return "redirect:/projects/"+project_id;
+	}
+
+	
+	@GetMapping(value = "/projects/{project_id}/tasks/{task_id}")
+	public String accediTask(@PathVariable("project_id") Long project_id,
+							@PathVariable("task_id") Long task_id,
+							Model model)
+	{
 		return "redirect:/projects/"+project_id;
 	}
 	

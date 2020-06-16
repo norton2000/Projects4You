@@ -15,6 +15,8 @@ public class Commento {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+
+
 	@OneToOne(fetch = FetchType.EAGER)
 	private User leavedBy;
 	
@@ -51,6 +53,37 @@ public class Commento {
 
 	public void setTestoCommento(String testCommento) {
 		this.testoCommento = testCommento;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((leavedBy == null) ? 0 : leavedBy.hashCode());
+		result = prime * result + ((testoCommento == null) ? 0 : testoCommento.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Commento other = (Commento) obj;
+		if (leavedBy == null) {
+			if (other.leavedBy != null)
+				return false;
+		} else if (!leavedBy.equals(other.leavedBy))
+			return false;
+		if (testoCommento == null) {
+			if (other.testoCommento != null)
+				return false;
+		} else if (!testoCommento.equals(other.testoCommento))
+			return false;
+		return true;
 	}
 	
 }
