@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.controller.session.SessionData;
-import com.example.demo.model.Credentials;
+import com.example.demo.model.Commento;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
-import com.example.demo.services.CredentialsService;
 import com.example.demo.services.ProjectService;
 import com.example.demo.services.UserService;
 import com.example.demo.validator.ProjectValidator;
@@ -31,9 +30,6 @@ public class ProjectController {
 	
 	@Autowired
 	UserService userService;
-	
-	@Autowired
-	CredentialsService credentialSerivce;
 	
 	@Autowired
 	ProjectValidator projectValidator;
@@ -64,7 +60,8 @@ public class ProjectController {
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
-		model.addAttribute("userToShare", new Credentials()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto
+		model.addAttribute("userToShare", new User()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto
+		model.addAttribute("newComment", new Commento());
 		
 		return "projectOwned";
 	}
@@ -95,7 +92,7 @@ public class ProjectController {
 	
 	@PostMapping(value = {"projects/{id}/share"})
 	public String shareProject(@PathVariable("id") Long id_progetto,
-							  @ModelAttribute("userToShare") Credentials userToShareUsername,
+							  @ModelAttribute("userToShare") User userToShare,
 							  BindingResult errors,
 							  Model model) {
 		
@@ -108,22 +105,21 @@ public class ProjectController {
 		model.addAttribute("members", members);
 		
 	
-		Credentials userToShareCred = this.credentialSerivce.getCredentials(userToShareUsername.getUsername());
-		if(userToShareCred == null) {
-			errors.rejectValue("username", "notExists");
+		userToShare = this.userService.getUser(userToShare.getNickname());
+		if(userToShare == null) {
+			errors.rejectValue("nickname", "notExists");
 			return "projectOwned";
 		}
-		User userToShare = userToShareCred.getUser();
 		
 		//Se sto cercando di condividere con me stesso o se chi cerco è già membro del progetto
 		if(userToShare.equals(loggedUser) || members.contains(userToShare)) {
 			
-			errors.rejectValue("username", "alreadyMember");
+			errors.rejectValue("nickname", "alreadyMember");
 			return "projectOwned";
 		}
 		project.addMember(userToShare);
 		model.addAttribute("members", project.getMembers());
-		model.addAttribute("userToShare", new Credentials());
+		model.addAttribute("userToShare", new User());
 		this.projectService.saveProject(project);
 		
 		return "projectOwned";

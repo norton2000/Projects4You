@@ -1,13 +1,21 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.UpdateTimestamp;
+
 
 @Entity
 public class Task {
@@ -18,19 +26,28 @@ public class Task {
 	@Column(nullable=false, length = 100)
 	private String name;
 	
-	@Column(nullable=false, length = 100)
+	@Column(nullable=false, length = 2500)
 	private String description;
 	
 	@Column(nullable = false)
 	private boolean completed;
 	
 	@ManyToOne
+	private User user;
+	
+	@ManyToOne
 	private Project project;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "task_id")
+	private List<Commento> commenti;
+	
 	
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime creationTimestamp;
 	
 	@Column(nullable = false)
+	@UpdateTimestamp
 	private LocalDateTime lastUpdateTimestamp;
 	
 	public Task() {}
@@ -40,6 +57,10 @@ public class Task {
 		this.name = name;
 		this.description = description;
 		this.completed = completed;
+	}
+	
+	public Long getId() {
+		return this.id;
 	}
 
 	public String getName() {
@@ -89,6 +110,29 @@ public class Task {
 	public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
 		this.lastUpdateTimestamp = lastUpdateTimestamp;
 	}
+	public void updateLastUpdateTimestamp() {
+		this.setLastUpdateTimestamp(LocalDateTime.now());
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Commento> getCommenti() {
+		return commenti;
+	}
+
+	public void setCommenti(List<Commento> commenti) {
+		this.commenti = commenti;
+	}
+	
+	public void addComment(Commento commento) {
+		this.commenti.add(commento);
+	}
 
 	@Override
 	public int hashCode() {
@@ -129,6 +173,12 @@ public class Task {
 			return false;
 		return true;
 	}
+
+
+
+
+
+	
 	
 	
 }

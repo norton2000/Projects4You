@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.model.Commento;
 import com.example.demo.model.Task;
+import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
 
 @Service
@@ -26,11 +28,20 @@ public class TaskService {
 	}
 	
 	public Task saveTask(Task task) {
+		task.updateLastUpdateTimestamp();
 		return this.taskRepository.save(task);
 	}
 	
 	public Task setCompletedTask(Task task) {
 		task.setCompleted(true);
 		return this.taskRepository.save(task);
+	}
+
+	public void addComment(Task task, Commento commento, User user) {
+		
+		commento.setLeavedBy(user);
+		task.addComment(commento);
+		this.taskRepository.save(task);
+		
 	}
 }

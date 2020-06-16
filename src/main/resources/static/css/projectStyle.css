@@ -1,4 +1,35 @@
 div.taskListItem{
-	border: 2em;
-	border-color: aqua;
+	border: 2px;
+	border-color: olive;
+	background-color: aqua;
+	border-style: groove;
+	
+}
+
+div.taskListItem *{
+	margin: 1em;
+}
+
+div.bottoniCommenti{
+	width: 50%;
+}
+
+h2.nomeTask{
+	color: gray;
+	
+}
+
+textarea{
+	resize: none;
+	width: 100%;
+}
+
+ul{
+	list-style-type: none;
+ 	margin: 0;
+ 	 padding: 0;
+}
+
+ul.commenti{
+  list-style-type: none;
 }

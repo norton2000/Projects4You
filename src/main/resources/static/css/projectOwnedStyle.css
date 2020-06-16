@@ -1,6 +1,6 @@
 #areaShare {
 	margin: 1em;
-	border-color: gray;
+	border-style : groove;
 	background-color: #e0e4e5;
 }
 
@@ -11,3 +11,4 @@ form.formShare{
 button{
 	margin-top: 1px;
 }
+

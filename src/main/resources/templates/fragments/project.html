@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="https://www.thymeleaf.org">
-<head th:fragment="projectHead" th:replace="fragments/base.html :: head">
+<head th:fragment="projectHead">
+<th:block th:insert="fragments/base.html :: head"></th:block>
 <link th:href="@{/css/projectStyle.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/javascript/projectScript.js}"></script>
 </head>
 <body>
 	<div th:fragment="intestazioneProject">
@@ -17,14 +19,78 @@
 		</div>
 	</div>
 
-	<div th:fragment = "elencoTaskCompleto">
-		<h3>task:</h3><br/>
+	<div th:fragment="elencoTaskCompleto">
+		<h3>task:</h3>
 		<ul>
-			<li th:fragment="taskListItem" th:each="task : ${project.tasks}">
-				<div class="taskListItem">
-					<div th:text="${task.name}"></div>
-					<div th:text="${task.description}" style="color: red"></div>
+			<li th:each="task : ${project.tasks}">
+
+
+				<div class="taskListItem" th:fragment="taskListItem">
+					<div>
+						<div style="width: 70%;">
+							<h2 class="nomeTask" th:text="${task.name}">Nome</h2>
+						</div>
+						<div style="width: 30%">
+							<a
+								th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/completed'}">Completed</a>
+						</div>
+						<h3 class="taskCompleted" th:if="${task.completed} == true"
+							style="color: green;" align="right">Completed</h3>
+						<h3 class="taskCompleted" th:if="${task.completed} == false"
+							style="color: red;" align="right">Not Completed</h3>
+					</div>
+					<div>
+						<label th:if="${task.user}"
+							th:text="|Assigned to: ${task.user.nickname}|"></label>
+					</div>
+					<div>
+						<p th:text="${task.description}"></p>
+					</div>
+					<div align="center">
+						<button th:id="|bottoneShow${task.id}|" 
+							th:onclick="|showComments('${task.id}')|">Show Comments</button>
+						<button th:id="|bottoneHide${task.id}|" hidden="true"
+							th:onclick="|hideComments('${task.id}')|">Hide Comments</button>
+					</div>
+
+
+					<div th:id="|commenti${task.id}|" hidden="true">
+						<div class="bottoniCommenti" align="left">
+							<button th:onclick="|lasciaCommento('${task.id}')|">Leave a comment</button>
+							<button th:onclick="|nascondiFormCommento('${task.id}')|">Close</button>
+						</div>
+
+
+						<form th:id="|leaveCommentForm${task.id}|"
+							th:action="@{'~/project/'+${project.id}+'/tasks/'+${task.id}+'/comment'}"
+							hidden="true" method="POST">
+							<textarea id="commentArea" th:field="${newComment.testoCommento}"
+								th:form="|leaveCommentForm${task.id}|" wrap="hard" rows="4" maxlength="100"></textarea>
+							<div align="center">
+								<input type="submit" name="Comment">
+							</div>
+
+
+						</form>
+
+
+						<ul class="commenti">
+							<li th:each="commento : ${task.commenti}">
+								<div class="commento">
+									<h4 th:text="|Comment by ${commento.leavedBy.nickname}|"></h4>
+									<p th:text="${commento.testoCommento}"></p>
+								</div>
+							</li>
+						</ul>
+
+					</div>
+
+
 				</div>
+
+
+
+
 			</li>
 		</ul>
 	</div>
