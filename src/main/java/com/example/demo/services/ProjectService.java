@@ -57,24 +57,28 @@ public class ProjectService {
 		return this.projectRepository.findByMembers(user);
 	}
 
+	@Transactional
 	public Task getTask(Long task_id) {
 		Optional<Task> optionalTask = this.taskRepository.findById(task_id);
 		return optionalTask.orElse(null);
 	}
 
+	@Transactional
 	public void assegnaTask(Task task, User user) {
 		task.setUser(user);
 		this.taskRepository.save(task);
 	}
 
+	@Transactional
 	public void completeTask(Task task) {
 		task.setCompleted(true);
 		this.taskRepository.save(task);
 	}
 
+	@Transactional
 	public void creaNuovoTask(Project project, Task task) {
 		task.setCreationTimestamp(LocalDateTime.now());
-		project.addTask(task);
+		task.setProject(project);
 		this.taskRepository.save(task);
 	}
 	

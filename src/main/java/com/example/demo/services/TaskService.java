@@ -27,20 +27,24 @@ public class TaskService {
 		return result.orElse(null);
 	}
 	
+	@Transactional
 	public void deleteTask(Task task) {
 		this.taskRepository.delete(task);
 	}
 	
+	@Transactional
 	public Task saveTask(Task task) {
 		task.updateLastUpdateTimestamp();
 		return this.taskRepository.save(task);
 	}
 	
+	@Transactional
 	public Task setCompletedTask(Task task) {
 		task.setCompleted(true);
 		return this.taskRepository.save(task);
 	}
 
+	@Transactional
 	public void addComment(Task task, Commento commento, User user) {
 		
 		commento.setLeavedBy(user);
