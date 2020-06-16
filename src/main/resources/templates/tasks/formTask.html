@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+		th:fragment = "formTask(operazione)">
 <head>
 <th:block th:insert="fragments/base.html :: head"></th:block>
 <link th:href="@{/css/taskFormStyle.css}" rel="stylesheet" />
 </head>
 <body>
+	<div th:if="${#fields.hasErrors('task')}">
+		<span th:errors="${task}" th:style="color:red"></span>
+	</div>
 	<h1>Add new Task</h1>
-	<form th:action="@{'~/projects/'+${project.id}+'/tasks/add'}" method="POST"
+	<form th:action="@{'~/projects/'+${project.id}+'/tasks/'+${operazione}}" method="POST"
 		id="taskForm">
 		<div class="taskFormDiv">
 			<label for="taskName">Task name: </label>

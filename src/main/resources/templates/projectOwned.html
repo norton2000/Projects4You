@@ -41,6 +41,7 @@
 			<div class="linkGestioneTask">
 				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna'}">Assign</a>
 				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/edit'}">Edit</a>
+				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/delete'}">Delete</a>
 			</div>
 			<th:block th:insert="fragments/project.html :: taskListItem"></th:block>
 		</li>

@@ -1,7 +1,6 @@
 package com.example.demo.services;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +12,6 @@ import com.example.demo.model.Project;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProjectRepository;
-import com.example.demo.repository.TaskRepository;
 
 @Service
 public class ProjectService {
@@ -21,8 +19,6 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	@Autowired
-	private TaskRepository taskRepository;
 	
 	@Transactional
 	public Project getProject(Long id) {
@@ -57,30 +53,6 @@ public class ProjectService {
 		return this.projectRepository.findByMembers(user);
 	}
 
-	@Transactional
-	public Task getTask(Long task_id) {
-		Optional<Task> optionalTask = this.taskRepository.findById(task_id);
-		return optionalTask.orElse(null);
-	}
-
-	@Transactional
-	public void assegnaTask(Task task, User user) {
-		task.setUser(user);
-		this.taskRepository.save(task);
-	}
-
-	@Transactional
-	public void completeTask(Task task) {
-		task.setCompleted(true);
-		this.taskRepository.save(task);
-	}
-
-	@Transactional
-	public void creaNuovoTask(Project project, Task task) {
-		task.setCreationTimestamp(LocalDateTime.now());
-		task.setProject(project);
-		this.taskRepository.save(task);
-	}
 	
 	
 }

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class TaskController {
 	public String startAddNewTask(@PathVariable("id") Long project_id, Model model) {
 		model.addAttribute("project", this.projectService.getProject(project_id));
 		model.addAttribute("task", new Task());
-		return "tasks/formTask";
+		return "tasks/formAddTask";
 	}
 	
 	@PostMapping(value = "/projects/{id}/tasks/add")
@@ -56,18 +56,21 @@ public class TaskController {
 		Project project = this.projectService.getProject(project_id);
 		
 		if(project == null) {
-			return "redirect:/projects"+project_id;
+			return "redirect:/projects";
+		}
+		if(!project.getOwner().equals(sessionData.getLoggedUser())) {
+			return "redirect:/projects";								//TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
 		}
 		
 		model.addAttribute("project", project);
 		this.taskValidator.validate(task, taskErrors);
 		if(taskErrors.hasErrors()) {
 			model.addAttribute("task", task);
-			return "tasks/formTask";
+			return "tasks/formAddTask";
 		}
 		
 		
-		this.projectService.creaNuovoTask(project, task);
+		this.taskService.creaNuovoTask(project, task);
 		
 		return "redirect:/projects/"+project.getId();
 	}
@@ -79,16 +82,19 @@ public class TaskController {
 		Project project = this.projectService.getProject(project_id);
 		
 		if(project == null) {
-			return "redirect:/projects"+project_id;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+project_id;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		if(!project.getOwner().equals(sessionData.getLoggedUser())) {
+			return "redirect:/projects";								//TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
 		}
 		
 		model.addAttribute("project", project);
 		User loggedUser = this.sessionData.getLoggedUser();
 		List<User> members = userService.getMembers(project);
-		Task task = this.projectService.getTask(task_id);
+		Task task = this.taskService.getTask(task_id);
 		
 		if(task == null) {
-			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		}
 		
 		model.addAttribute("loggedUser", loggedUser);
@@ -103,36 +109,126 @@ public class TaskController {
 								@PathVariable("task_id") Long task_id,
 								@PathVariable("user_id") Long user_id)
 	{
-		Task task = this.projectService.getTask(task_id);
+		Project project = this.projectService.getProject(project_id);
+		if(project == null)
+			return "redirect:/projects";
+		if(!project.getOwner().equals(sessionData.getLoggedUser())) {
+			return "redirect:/projects";								//TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+		
+		Task task = this.taskService.getTask(task_id);
 		
 		User user = this.userService.getUser(user_id);
 		
 		if(user == null || user == null) {
-			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		}
 		
-		this.projectService.assegnaTask(task, user);
+		this.taskService.assegnaTask(task, user);
 		return "redirect:/projects/"+project_id;
 	}
 	
 	@GetMapping(value = "/projects/{project_id}/tasks/{task_id}/edit")
 	public String editTask(@PathVariable("project_id") Long project_id,
-							@PathVariable("task_id") Long task_id) 
+							@PathVariable("task_id") Long task_id,
+							Model model) 
 	{
-		return "home";
+		Project project = this.projectService.getProject(project_id);
+		Task task = this.taskService.getTask(task_id);
+		if(project == null ) {
+			return "redirect:/projects";
+		}
+		if(!project.getOwner().equals(sessionData.getLoggedUser())) {
+			return "redirect:/projects";								//TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+		if(task == null) {
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+
+		
+		model.addAttribute("task", task);
+		model.addAttribute("project", project);
+		
+		return "tasks/formEditTask";
 	}
+	
+	@PostMapping(value = "/projects/{project_id}/tasks/{task_id}/edit")
+	public String editTask(@PathVariable("project_id") Long project_id,
+							@PathVariable("task_id") Long task_id,
+							@ModelAttribute("task") Task task,
+							BindingResult taskErrors,
+							Model model) {
+		Project project = this.projectService.getProject(project_id);
+		
+		if(project == null) {
+			return "redirect:/projects";  //TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+		if(!project.getOwner().equals(sessionData.getLoggedUser())) {
+			return "redirect:/projects";								//TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+		
+		Task taskDaModificare = this.taskService.getTask(task_id);
+		
+		if(taskDaModificare == null) {
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+		
+		this.taskValidator.validateEdit(project, taskDaModificare, task, taskErrors);
+		
+		if(taskErrors.hasErrors()) {
+			model.addAttribute("project", project);
+			model.addAttribute("task", task);
+			return "tasks/formEditTask";
+		}
+		
+		taskDaModificare.setName(task.getName());
+		taskDaModificare.setDescription(task.getDescription());
+		this.taskService.saveTask(taskDaModificare);
+		
+		return "redirect:/projects/"+project_id;
+	}
+	
+	
+	@GetMapping(value = "/projects/{project_id}/tasks/{task_id}/delete")
+	public String deleteTask(@PathVariable("project_id") Long project_id,
+								@PathVariable("task_id") Long task_id,
+								Model model)
+	{
+		Project project = this.projectService.getProject(project_id);
+		Task task = this.taskService.getTask(task_id);
+		
+		//TODO Per tutti e tre servirebbe la pagina di errore
+		if(project == null) {
+			System.out.println("project null");
+			return "redirect:/projects";
+		}
+		if(task == null) {
+			System.out.println("task null");
+			return "redirect:/projects/"+project_id;
+		}
+		if(!task.getProject().equals(project) || !project.getOwner().equals(this.sessionData.getLoggedUser())) {
+			System.out.println("terzo if");
+			return "redirect:/projects";
+		}
+		
+		project.deleteTask(task);
+		this.taskService.deleteTask(task);
+		
+		return "redirect:/projects";
+	}
+	
 	
 	@RequestMapping(value = "/projects/{project_id}/tasks/{task_id}/completed")
 	public String setTaskCompleted(@PathVariable("project_id") Long project_id,
 								@PathVariable("task_id") Long task_id)
 	{
-		Task task = this.projectService.getTask(task_id);
+		Task task = this.taskService.getTask(task_id);
 		
 		if(task == null) {
-			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		}
 		
-		this.projectService.completeTask(task);
+		this.taskService.setCompletedTask(task);
 		return "redirect:/projects/"+project_id;
 		
 	}
@@ -144,10 +240,10 @@ public class TaskController {
 								BindingResult commentError,
 								Model model)
 	{
-		Task task = this.projectService.getTask(task_id);
+		Task task = this.taskService.getTask(task_id);
 		
 		if(task == null) {
-			return "redirect:/projects"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		}
 		
 		User user = this.sessionData.getLoggedUser();
