@@ -33,9 +33,11 @@ public class Project {
 	@ManyToMany
 	private List<User> members;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Task> tasks;
+	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Tag> tags;
 	
 	public Project() {
 		this.tasks = new ArrayList<>();
@@ -102,6 +104,14 @@ public class Project {
 	
 	public void addMember(User member) {
 		this.members.add(member);
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -49,6 +50,9 @@ public class Task {
 	@Column(nullable = false)
 	@UpdateTimestamp
 	private LocalDateTime lastUpdateTimestamp;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Tag> tags;
 	
 	public Task() {}
 	
@@ -57,6 +61,10 @@ public class Task {
 		this.name = name;
 		this.description = description;
 		this.completed = completed;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public Long getId() {
@@ -132,6 +140,14 @@ public class Task {
 	
 	public void addComment(Commento commento) {
 		this.commenti.add(commento);
+	}
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	@Override
