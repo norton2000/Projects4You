@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,12 @@ public class ProjectService {
 	public Project shareProjectWithUser(Project project, User user) {
 		project.addMember(user);
 		return this.projectRepository.save(project);
+	}
+	
+	@Transactional
+	public List<Project> getProjectsSharedWithMe(User user) {
+		
+		return this.projectRepository.findByMembers(user);
 	}
 
 	public Task getTask(Long task_id) {
