@@ -40,6 +40,7 @@ public class CredentialsService {
 		return this.credentialsRepository.save(credentials);
 	}
 
+	@Transactional
 	public List<Credentials> getAllCredentials() {
 		Iterable<Credentials> i = credentialsRepository.findAll();
 		ArrayList<Credentials> lista = new ArrayList<>();
@@ -49,6 +50,7 @@ public class CredentialsService {
 		return lista;
 	}
 
+	@Transactional
 	public void deleteCredentials(String username) {
 		Optional<Credentials> result = this.credentialsRepository.findByUsername(username);
 		if(result.isPresent())
