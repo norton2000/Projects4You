@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<th:block th:insert="fragments/base.html :: head"></th:block>
+<link th:href="@{/css/taskFormStyle.css}" rel="stylesheet" />
+</head>
+<body>
+	<h1>Add new Tag</h1>
+	<form th:action="@{'~/projects/'+${project.id}+'/tags/add'}" method="POST"
+		id="tagForm">
+		<div class="tagFormDiv">
+			<label for="tagName">tag name: </label>
+		</div>
+		<input type="text" required th:field="${tag.name}" />
+		<span th:if="${#fields.hasErrors('tag.name')}"
+					th:errors="${tag.name}" th:style="'color:red'"></span>
+		<div class="tagFormDiv">
+			<label for="tagDescription">tag Description:</label>
+			<span th:if="${#fields.hasErrors('tag.description')}"
+					th:errors="${tag.description}" th:style="color:red"></span>
+		</div>
+		<div class="tagFormDiv">
+			<textarea id="descriptionArea" th:field="${tag.description}"
+				form="tagForm" wrap="hard" rows="10" maxlength="1000"></textarea>
+		</div>
+		<div class="tagFormDiv" align="center"><input type="submit"></div>
+	</form>
+	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
+</body>
+</html>
