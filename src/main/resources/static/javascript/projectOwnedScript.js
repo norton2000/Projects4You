@@ -4,3 +4,4 @@ function visualizzaAreaShare(){
 function closeAreaShare(){
 	document.getElementById("areaShare").hidden = true;
 }
+

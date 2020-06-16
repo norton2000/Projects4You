@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.controller.session.SessionData;
+import com.example.demo.model.Commento;
 import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import com.example.demo.services.ProjectService;
@@ -60,6 +61,7 @@ public class ProjectController {
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
 		model.addAttribute("userToShare", new User()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto
+		model.addAttribute("newComment", new Commento());
 		
 		return "projectOwned";
 	}

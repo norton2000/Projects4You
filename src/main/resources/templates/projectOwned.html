@@ -13,8 +13,7 @@
 	</div>
 
 
-	<button onclick="visualizzaAreaShare()">Share with another
-		user</button>
+	<button onclick="visualizzaAreaShare()">Share with another user</button>
 	<div id="areaShare" hidden="true">
 		<form class="formShare"
 			th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
@@ -35,11 +34,12 @@
 
 	</div>
 
-	<h3>Task:</h3>
+	<h3>Tasks:</h3>
  	<div style="text-align: right;"><a th:href="@{'~/projects/'+${project.id}+'/tasks/add'}">Add new task</a></div>
-	<ul>
-		<li th:replace="fragments/project.html :: taskListItem">
-			<div th:text="${task.name}"></div>
+	<ul th:if="${project.tasks}">
+		<li th:each="task : ${project.tasks}">
+			<div style="text-align: right;"><a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna'}">Assign</a></div>
+			<th:block th:insert="fragments/project.html :: taskListItem"></th:block>
 		</li>
 	</ul>
 
