@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,12 @@ public class ProjectService {
 
 	public void completeTask(Task task) {
 		task.setCompleted(true);
+		this.taskRepository.save(task);
+	}
+
+	public void creaNuovoTask(Project project, Task task) {
+		task.setCreationTimestamp(LocalDateTime.now());
+		project.addTask(task);
 		this.taskRepository.save(task);
 	}
 	

@@ -73,6 +73,10 @@ public class ProjectController {
 	public String onGetMyProject(@PathVariable("project_id") Long project_id) 
 	{
 		Project project = this.projectService.getProject(project_id);
+		
+		if(project == null)
+			return "redirect:/projects/myProjects";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		
 		User loggedUser = this.sessionData.getLoggedUser();
 		
 		if(project.getOwner().equals(loggedUser)) {
@@ -116,6 +120,11 @@ public class ProjectController {
 		//Prendo i dati che serviranno, e ripreparo i dati di base per la pagina
 		User loggedUser = this.sessionData.getLoggedUser();
 		Project project = this.projectService.getProject(id_progetto);
+		
+		if(project == null) {
+			return "redirect:/projects"+id_progetto;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		List<User> members = userService.getMembers(project);
 		model.addAttribute("loggedUser", loggedUser);
 		this.preparaPerVistaProgetto(model, project);
@@ -155,6 +164,11 @@ public class ProjectController {
 									Model model) {
 		
 		Project project = this.projectService.getProject(project_id);
+		
+		if(project == null) {
+			return "redirect:/projects"+project_id;  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+		}
+		
 		User loggedUser = this.sessionData.getLoggedUser();
 		
 		if(project.getMembers().contains(loggedUser))
