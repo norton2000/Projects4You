@@ -188,6 +188,36 @@ public class TaskController {
 		return "redirect:/projects/"+project_id;
 	}
 	
+	
+	@GetMapping(value = "/projects/{project_id}/tasks/{task_id}/delete")
+	public String deleteTask(@PathVariable("project_id") Long project_id,
+								@PathVariable("task_id") Long task_id,
+								Model model)
+	{
+		Project project = this.projectService.getProject(project_id);
+		Task task = this.taskService.getTask(task_id);
+		
+		//TODO Per tutti e tre servirebbe la pagina di errore
+		if(project == null) {
+			System.out.println("project null");
+			return "redirect:/projects";
+		}
+		if(task == null) {
+			System.out.println("task null");
+			return "redirect:/projects/"+project_id;
+		}
+		if(!task.getProject().equals(project) || !project.getOwner().equals(this.sessionData.getLoggedUser())) {
+			System.out.println("terzo if");
+			return "redirect:/projects";
+		}
+		
+		project.deleteTask(task);
+		this.taskService.deleteTask(task);
+		
+		return "redirect:/projects";
+	}
+	
+	
 	@RequestMapping(value = "/projects/{project_id}/tasks/{task_id}/completed")
 	public String setTaskCompleted(@PathVariable("project_id") Long project_id,
 								@PathVariable("task_id") Long task_id)

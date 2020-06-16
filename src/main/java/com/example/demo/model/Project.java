@@ -102,6 +102,10 @@ public class Project {
 		task.setProject(this);
 		this.tasks.add(task);
 	}
+	public void deleteTask(Task task) {
+		this.tasks.remove(task);
+		
+	}
 	
 	public void addMember(User member) {
 		this.members.add(member);
@@ -139,4 +143,6 @@ public class Project {
 			return false;
 		return true;
 	}
+
+	
 }
