@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -78,8 +79,7 @@ public class UserController {
     @GetMapping(value = {"/users/modify"})
     public String getModifyUserPage(Model model) {
     	User userLoggato = this.sessionData.getLoggedUser();
-    	model.addAttribute("userForm", userLoggato); 	
-
+    	model.addAttribute("userForm", userLoggato); 
     	return "modificaUser";
     }
 
@@ -97,7 +97,7 @@ public class UserController {
     		this.userService.saveUser(userLoggato);
     		model.addAttribute("credentials", this.sessionData.getLoggedCredentials());
     		model.addAttribute("loggedUser", userLoggato);
-    		return "userProfile";
+    		return "redirect:/users/me";
     	}
     	return "modificaUser";
     }
