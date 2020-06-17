@@ -157,4 +157,12 @@ public class User {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+	public void deleteOwnedProject(Project project) {
+		this.ownedProjects.remove(project);
+	}
+	public void deleteVisibleProject(Project project) {
+		this.visibleProjects.remove(project);
+	}
+	
 }
