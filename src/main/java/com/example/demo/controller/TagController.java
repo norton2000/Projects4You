@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.model.Colore;
 import com.example.demo.model.Project;
 import com.example.demo.model.Tag;
+import com.example.demo.model.Task;
 import com.example.demo.services.ProjectService;
 import com.example.demo.services.TagService;
 import com.example.demo.validator.TagValidator;
@@ -60,5 +61,26 @@ public class TagController {
 		this.tagService.saveTag(tag, project);
 		
 		return "redirect:/projects/"+project.getId();
+	}
+	
+	@GetMapping(value = "/projects/{project_id}/tags/{tag_id}")
+	public String editTask(@PathVariable("project_id") Long project_id,
+							@PathVariable("tag_id") Long tag_id,
+							Model model) 
+	{
+		Project project = this.projectService.getProject(project_id);
+		Tag tag = this.tagService.getTag(tag_id);
+		if(project == null ) {
+			return "redirect:/projects";
+		}
+		if(tag == null) {
+			return "redirect:/projects/"+project_id; //TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
+		}
+
+		
+		model.addAttribute("tag", tag);
+		model.addAttribute("project", project);
+		
+		return "tags/tag";
 	}
 }

@@ -102,7 +102,9 @@
 			<ul th:fragment="elencoTag">
 				<li th:each="tag : ${project.tags}">
 					<div>
-						<p th:text="${tag.name}" th:style="'color:' + ${tag.color}"></p>
+					<p>
+						<a th:href="@{'~/projects/'+${project.id}+'/tags/'+${tag.id}}" th:text="${tag.name}" th:style="'color:' + ${tag.color}"></a>
+					</p>
 					</div>
 				</li>
 			</ul>

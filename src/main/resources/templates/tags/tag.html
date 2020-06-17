@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head th:fragment="tagHead">
+<th:block th:insert="fragments/base.html :: head"></th:block>
+<link th:href="@{/css/projectStyle.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/javascript/projectScript.js}"></script>
+</head>
+<body>
+	<div th:style="'background-color:' + ${tag.color}">
+		<h1 th:text="${tag.name}"></h1>
+		<a th:text="${tag.description}"></a>
+	</div>
+	<div th:fragment="elencoTaskDaTag">
+		<h3>task:</h3>
+		<ul>
+			<li th:each="task : ${tag.tasks}">
+				<div class="taskListItem" th:replace="taskListItem">
+				</div>
+			</li>
+		</ul>
+	</div>
+
+
+
+	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
+</body>
+</html>
