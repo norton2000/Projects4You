@@ -11,7 +11,7 @@
 	<form th:action="@{'~/projects/'+${project.id}+'/tags/add'}"
 		method="POST" id="tagForm">
 
-		
+
 				<div class="area">
 					<div class="tagFormDiv">
 						<label for="tagName">Tag name: </label>
@@ -31,7 +31,7 @@
 						<option th:each="colore : ${colori}" th:value="${colore}" th:text="${colore}"></option>
 					</select>
 				</div>
-		
+
 
 		<div class="tagFormDiv">
 			<label for="tagDescription">Tag Description:</label> <span
