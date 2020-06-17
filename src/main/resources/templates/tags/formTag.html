@@ -11,7 +11,7 @@
 	<form th:action="@{'~/projects/'+${project.id}+'/tags/add'}"
 		method="POST" id="tagForm">
 
-		
+
 				<div class="area">
 					<div class="tagFormDiv">
 						<label for="tagName">Tag name: </label>
@@ -25,17 +25,13 @@
 
 				<div class="area">
 					<div class="tagFormDiv">
-						<label for="tagName">Tag name: </label>
+						<label for="tagColor">Tag color: </label>
 					</div>
-					<select th:field="${tag.colore}">
-						<!--  !!!!!!!!!!!!!!!! ATTENTO QUI CON IL NOME DELLA VARIABILE -->
-						<!--  <option th:each="${colore : colori}" th:value="colore"></option>   colori sarà la lista di stringhe, quelle sotto vanno tolte poi -->
-						<option value="prova1">Opzione prova 1</option>
-						<option value="prova2">Opzione prova 2</option>
-						<option value="prova3">Opzione prova 3</option>
+					<select th:field="${tag.color}">
+						<option th:each="colore : ${colori}" th:value="${colore}" th:text="${colore}"></option>
 					</select>
 				</div>
-		
+
 
 		<div class="tagFormDiv">
 			<label for="tagDescription">Tag Description:</label> <span
