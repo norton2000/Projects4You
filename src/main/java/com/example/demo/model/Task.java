@@ -118,9 +118,7 @@ public class Task {
 	public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
 		this.lastUpdateTimestamp = lastUpdateTimestamp;
 	}
-	public void updateLastUpdateTimestamp() {
-		this.setLastUpdateTimestamp(LocalDateTime.now());
-	}
+	
 	
 	public User getUser() {
 		return user;
