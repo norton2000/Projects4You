@@ -14,19 +14,19 @@
 
 
 	<button onclick="visualizzaAreaShare()">Share with another user</button>
-	<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button> </a>
-	<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button> </a>
+	<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button></a>
+	<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button></a>
 	<div id="areaShare" hidden="true">
-		<form class="formShare" th:object="${userToShare}"
+		<form class="formShare"
 			th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
 			<table>
 				<tr>
 					<td><label for="nicknameInput">Insert nickname: </label>
 					<td><input id="nicknameInput" type="text"
 						placeholder="insert a nickname" required
-						th:field="*{nickname}" /></td>
-					<td th:if="${#fields.hasErrors('nickname')}"
-						th:errors="*{nickname}" th:style="'color:red'"></td>
+						th:field="${userToShare.nickname}" /></td>
+					<td><span th:if="${#fields.hasErrors('userToShare.nickname')}"
+						th:errors="${userToShare.nickname}" th:style="'color:red'"></span></td>
 				<tr>
 					<td><input type="submit"></td>
 					<td><button onclick="closeAreaShare()">Close</button></td>

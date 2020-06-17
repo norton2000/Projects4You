@@ -37,7 +37,6 @@ public class TaskService {
 	
 	@Transactional
 	public Task saveTask(Task task) {
-		task.updateLastUpdateTimestamp();
 		return this.taskRepository.save(task);
 	}
 	

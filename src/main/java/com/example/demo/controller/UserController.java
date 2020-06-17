@@ -78,8 +78,7 @@ public class UserController {
     @GetMapping(value = {"/users/modify"})
     public String getModifyUserPage(Model model) {
     	User userLoggato = this.sessionData.getLoggedUser();
-    	User user = new User(userLoggato.getFirstname()	, userLoggato.getLastname());
-    	model.addAttribute("userForm", user); 	
+    	model.addAttribute("userForm", userLoggato); 	
 
     	return "modificaUser";
     }

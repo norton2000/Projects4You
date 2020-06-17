@@ -163,6 +163,7 @@ public class ProjectController {
 		
 		this.projectValidator.validate(projectModificato, errors);
 		if(errors.hasErrors()) {
+			projectModificato.setId(project_id);
 			return "projects/editProject";
 		}
 		project.setName(projectModificato.getName());
@@ -189,25 +190,25 @@ public class ProjectController {
 		
 		List<User> members = userService.getMembers(project);
 		model.addAttribute("loggedUser", loggedUser);
-		this.preparaPerVistaProgetto(model, project);
+		model.addAttribute("project", project);
+		model.addAttribute("members", members);
+		model.addAttribute("newComment", new Commento());
 	
-		userToShare = this.userService.getUser(userToShare.getNickname());
-		if(userToShare == null) {
+		User user = this.userService.getUser(userToShare.getNickname());
+		if(user == null) {
 			errors.rejectValue("nickname", "notExists");
-			model.addAttribute("userToShare", userToShare);
 			return "projectOwned";
 		}
 		
 		//Se sto cercando di condividere con me stesso o se chi cerco è già membro del progetto
-		if(userToShare.equals(loggedUser) || members.contains(userToShare)) {
+		if(user.equals(loggedUser) || members.contains(user)) {
 			errors.rejectValue("nickname", "alreadyMember");
-			model.addAttribute("userToShare", userToShare);
 			return "projectOwned";
 		}
-		project.addMember(userToShare);
+		project.addMember(user);
 		this.projectService.saveProject(project);
 		
-		return "projectOwned";
+		return "redirect:/projects/"+id_progetto;
 	}
 	
 	@GetMapping(value = "/projects/sharedWithMe")
