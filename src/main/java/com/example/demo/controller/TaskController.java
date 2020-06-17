@@ -211,10 +211,10 @@ public class TaskController {
 			return "redirect:/projects";
 		}
 		
-		project.deleteTask(task);
-		this.taskService.deleteTask(task);
 		
-		return "redirect:/projects";
+		this.taskService.deleteTask(project, task);
+		
+		return "redirect:/projects/"+project_id;
 	}
 	
 	
