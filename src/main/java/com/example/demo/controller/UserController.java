@@ -89,7 +89,7 @@ public class UserController {
     						Model model)
     {
     	User userLoggato = this.sessionData.getLoggedUser();
-    	this.userValidator.validate(newValues, errors);
+    	this.userValidator.validateUpdate(newValues, errors);
     	if(!errors.hasErrors()) {
     		userLoggato.setFirstname(newValues.getFirstname());
     		userLoggato.setLastname(newValues.getLastname());
