@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Colore {
-	BLU,
+	BLUE,
 	GREEN,
-	YELLOW,
+	ORANGE,
 	RED;
 	
 	public static List<String> allColors() {
