@@ -11,23 +11,23 @@
 	</div>
 	<h1>Add new Task</h1>
 	<form th:action="@{'~/projects/'+${project.id}+'/tasks/'+${operazione}}" method="POST"
-		id="taskForm">
+		th:object="${task}" id="taskForm">
 		<div class="taskFormDiv">
 			<label for="taskName">Task name: </label>
 		</div>
-		<input type="text" required th:field="${task.name}" />
-		<span th:if="${#fields.hasErrors('task.name')}"
-					th:errors="${task.name}" th:style="'color:red'"></span>
+		<input type="text" required th:field="*{name}" />
+		<span th:if="${#fields.hasErrors('name')}"
+					th:errors="*{name}" th:style="'color:red'"></span>
 		<div class="taskFormDiv">
 			<label for="taskDescription">Task Description:</label>
-			<span th:if="${#fields.hasErrors('task.description')}"
-					th:errors="${task.description}" th:style="color:red"></span>
+			<span th:if="${#fields.hasErrors('description')}"
+					th:errors="*{description}" th:style="color:red"></span>
 		</div>
 		<div class="taskFormDiv">
-			<textarea id="descriptionArea" th:field="${task.description}"
+			<textarea id="descriptionArea" th:field="*{description}"
 				form="taskForm" wrap="hard" rows="10" maxlength="2500"></textarea>
 		</div>
-		<div class="taskFormDiv" align="center"><input type="submit"></div>
+		<div class="taskFormDiv" align="center"><input type="submit" value="Confirm"></div>
 	</form>
 	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
 </body>

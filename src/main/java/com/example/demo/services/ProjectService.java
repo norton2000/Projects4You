@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Project;
-import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProjectRepository;
 
@@ -38,7 +37,9 @@ public class ProjectService {
 	
 	@Transactional
 	public void deleteProject(Project project) {
-		this.projectRepository.delete(project);
+		project.deleteSelf();
+		
+		this.projectRepository.deleteById(project.getId());
 	}
 	
 	@Transactional

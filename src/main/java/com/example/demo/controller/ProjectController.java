@@ -92,7 +92,7 @@ public class ProjectController {
 		User loggedUser = sessionData.getLoggedUser();
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("projectForm", new Project());
-		return "addProject";
+		return "projects/addProject";
 	}
 	
 	@RequestMapping(value = {"/projects/add"}, method = RequestMethod.POST)
@@ -107,8 +107,70 @@ public class ProjectController {
 			return "redirect:/projects/" + project.getId();
 		}
 		model.addAttribute("loggedUser", loggedUser);
-		return "addProject";
+		return "projects/addProject";
 	}
+	
+	@GetMapping(value = "/projects/{project_id}/delete")
+	public String deleteProject(@PathVariable("project_id") Long project_id,
+								Model model)
+	{
+		Project project = this.projectService.getProject(project_id);
+		
+		//TODO Ci sarebbe da mettere una pagina di errore
+		if(project == null)
+			return "redirect:/projects";
+		if(!project.getOwner().equals(this.sessionData.getLoggedUser())) {
+			return "redirect:/projects";
+		}
+		
+		this.projectService.deleteProject(project);
+		
+		
+		return "redirect:/projects";
+	}
+	
+	@GetMapping(value = "projects/{project_id}/edit")
+	public String editProject(@PathVariable("project_id") Long project_id,
+								Model model)
+	{
+		Project project = this.projectService.getProject(project_id);
+		if(project == null) {
+			return "redirect:/projects";
+		}
+		if(!project.getOwner().equals(this.sessionData.getLoggedUser())) {
+			return "redirect:/projects";
+		}
+		
+		model.addAttribute("projectForm", project);
+		
+		return "projects/editProject";
+	}
+	
+	@PostMapping(value = "/projects/{project_id}/edit")
+	public String editProject(@PathVariable("project_id") Long project_id,
+								@ModelAttribute("projectForm") Project projectModificato,
+								BindingResult errors,
+								Model model)
+	{
+		Project project = this.projectService.getProject(project_id);
+		
+		if(project == null) {
+			return "redirect:/projects";
+		}
+		if(!project.getOwner().equals(this.sessionData.getLoggedUser())) {
+			return "redirect:/projects";
+		}
+		
+		this.projectValidator.validate(projectModificato, errors);
+		if(errors.hasErrors()) {
+			return "projects/editProject";
+		}
+		project.setName(projectModificato.getName());
+		project.setDescription(projectModificato.getDescription());
+		this.projectService.saveProject(project);
+		return "redirect:/projects";
+	}
+
 	
 	
 	@PostMapping(value = {"projects/{id}/share"})
@@ -132,18 +194,17 @@ public class ProjectController {
 		userToShare = this.userService.getUser(userToShare.getNickname());
 		if(userToShare == null) {
 			errors.rejectValue("nickname", "notExists");
+			model.addAttribute("userToShare", userToShare);
 			return "projectOwned";
 		}
 		
 		//Se sto cercando di condividere con me stesso o se chi cerco è già membro del progetto
 		if(userToShare.equals(loggedUser) || members.contains(userToShare)) {
-			
 			errors.rejectValue("nickname", "alreadyMember");
+			model.addAttribute("userToShare", userToShare);
 			return "projectOwned";
 		}
 		project.addMember(userToShare);
-		model.addAttribute("members", project.getMembers());
-		model.addAttribute("userToShare", new User());
 		this.projectService.saveProject(project);
 		
 		return "projectOwned";
