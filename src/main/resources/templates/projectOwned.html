@@ -17,8 +17,8 @@
 
 
 			<button onclick="visualizzaAreaShare()">Share with another user</button>
-			<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button> </a>
-			<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button> </a>
+			<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button></a>
+			<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button></a>
 			<div id="areaShare" hidden="true">
 				<form class="formShare" th:object="${userToShare}"
 					th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
