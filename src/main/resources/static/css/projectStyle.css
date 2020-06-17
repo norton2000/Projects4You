@@ -1,9 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 div.taskListItem{
 	border: 2px;
 	border-color: olive;
 	background-color: aqua;
 	border-style: groove;
-	
 }
 
 div.taskListItem *{
@@ -12,12 +15,35 @@ div.taskListItem *{
 
 div.bottoniCommenti{
 	width: 50%;
+	align-content: flex-end;
+	align-items: flex-end;
+	align-self: flex-end;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.column.left {
+	width: 85%;
+}
+
+.column.right {
+	width: 15%;
 }
 
 h2.nomeTask{
 	color: gray;
 	
 }
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 
 textarea{
 	resize: none;
