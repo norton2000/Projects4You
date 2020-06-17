@@ -7,59 +7,58 @@
 
 <body>
 
-	<script type="text/javascript"
-		th:src="@{/javascript/projectOwnedScript.js}"></script>
-	<div th:replace="fragments/project.html :: intestazioneProject">
-	</div>
 
-
-	<button onclick="visualizzaAreaShare()">Share with another user</button>
-	<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button></a>
-	<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button></a>
-	<div id="areaShare" hidden="true">
-		<form class="formShare"
-			th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
-			<table>
-				<tr>
-					<td><label for="nicknameInput">Insert nickname: </label>
-					<td><input id="nicknameInput" type="text"
-						placeholder="insert a nickname" required
-						th:field="${userToShare.nickname}" /></td>
-					<td><span th:if="${#fields.hasErrors('userToShare.nickname')}"
-						th:errors="${userToShare.nickname}" th:style="'color:red'"></span></td>
-				<tr>
-					<td><input type="submit"></td>
-					<td><button onclick="closeAreaShare()">Close</button></td>
-				</tr>
-			</table>
-		</form>
-
-	</div>
-
-	<h3>Tasks:</h3>
- 	<div style="text-align: right;"><a th:href="@{'~/projects/'+${project.id}+'/tasks/add'}">Add new task</a></div>
-	<ul th:if="${project.tasks}">
-		<li th:each="task : ${project.tasks}">
-			<div class="linkGestioneTask">
-				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna'}">Assign</a>
-				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/edit'}">Edit</a>
-				<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/delete'}">Delete</a>
+	<div class="row">
+	 	<div class="column left">
+			<script type="text/javascript"
+				th:src="@{/javascript/projectOwnedScript.js}"></script>
+			<div th:replace="fragments/project.html :: intestazioneProject">
 			</div>
-			<th:block th:insert="fragments/project.html :: taskListItem"></th:block>
-		</li>
-	</ul>
+
+
+			<button onclick="visualizzaAreaShare()">Share with another user</button>
+			<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button> </a>
+			<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button> </a>
+			<div id="areaShare" hidden="true">
+				<form class="formShare" th:object="${userToShare}"
+					th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
+					<table>
+						<tr>
+							<td><label for="nicknameInput">Insert nickname: </label>
+							<td><input id="nicknameInput" type="text"
+								placeholder="insert a nickname" required
+								th:field="*{nickname}" /></td>
+							<td th:if="${#fields.hasErrors('nickname')}"
+								th:errors="*{nickname}" th:style="'color:red'"></td>
+						<tr>
+							<td><input type="submit"></td>
+							<td><button onclick="closeAreaShare()">Close</button></td>
+						</tr>
+					</table>
+				</form>
+
+			</div>
+
+			<h3>Tasks:</h3>
+		 	<div style="text-align: right;"><a th:href="@{'~/projects/'+${project.id}+'/tasks/add'}">Add new task</a></div>
+			<ul th:if="${project.tasks}">
+				<li th:each="task : ${project.tasks}">
+					<div class="linkGestioneTask">
+						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna'}">Assign</a>
+						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/edit'}">Edit</a>
+						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/delete'}">Delete</a>
+					</div>
+					<th:block th:insert="fragments/project.html :: taskListItem"></th:block>
+				</li>
+			</ul>
+		</div>
+		<div class="column right">
+			<h2>Tags:</h2>
+			<ul th:replace="fragments/project.html :: elencoTag"></ul>
+			<a th:href="@{'~/projects/'+${project.id}+'/tags/add'}"><button>Add new Tag</button></a>
+		</div>
+	</div>
 
 	<footer th:replace="fragments/base.html :: pagesFooter"> </footer>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
