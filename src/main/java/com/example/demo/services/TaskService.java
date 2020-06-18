@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Commento;
 import com.example.demo.model.Project;
+import com.example.demo.model.Tag;
 import com.example.demo.model.Task;
 import com.example.demo.model.User;
 import com.example.demo.repository.CommentoRepository;
@@ -64,6 +65,20 @@ public class TaskService {
 		commento.setLeavedBy(user);
 		task.addComment(commento);
 		this.commentoRepository.save(commento);
-		
 	}
+	
+	@Transactional
+	public Task removeTag(Tag tag, Task task) {
+		tag.removeTask(task);
+		task.removeTag(tag);
+		return this.taskRepository.save(task);
+	}
+
+	@Transactional
+	public Task addTag(Tag tag, Task task) {
+		tag.addTask(task);
+		task.addTag(tag);
+		return this.taskRepository.save(task);
+	}
+	
 }

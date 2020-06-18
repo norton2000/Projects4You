@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.example.demo.services.TagService;
+
 @Entity
 public class Tag {
 	@Id
@@ -88,6 +90,23 @@ public class Tag {
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
 	}
+	
+	public void deleteSelf() {
+		this.project.deleteTag(this);
+		for(Task task : tasks) {
+			task.deleteTag(this);
+		}
+	}
+	
+	public void addTask(Task task) {
+		if(!tasks.contains(task))
+			tasks.add(task);
+	}
+	
+	public boolean removeTask(Task task) {
+		return this.tasks.remove(task);
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -125,5 +144,4 @@ public class Tag {
 			return false;
 		return true;
 	}
-
 }

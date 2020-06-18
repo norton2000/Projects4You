@@ -33,6 +33,14 @@ div.bottoniCommenti{
 	width: 15%;
 }
 
+.column.left2 {
+	width: 75%;
+}
+
+.column.right2 {
+	width: 10%;
+}
+
 h2.nomeTask{
 	color: gray;
 	

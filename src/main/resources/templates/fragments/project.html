@@ -33,7 +33,7 @@
 									<h2 class="nomeTask" th:text="${task.name}">Nome</h2>
 								</div>
 								<div style="width: 30%">
-									<a
+									<a	th:if="${task.completed} == false"
 										th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/completed'}">Completed</a>
 								</div>
 								<h3 class="taskCompleted" th:if="${task.completed} == true"
@@ -71,8 +71,6 @@
 									<div align="center">
 										<input type="submit" name="Comment">
 									</div>
-		
-		
 								</form>
 		
 		
@@ -86,8 +84,12 @@
 								</ul>
 		
 							</div>
-		
-		
+							<div style="">
+								<span th:each="tag : ${task.tags}">
+									<a th:href="@{'~/projects/'+${project.id}+'/tags/'+${tag.id}}" th:text="${tag.name}" th:style="'color:' + ${tag.color} + ';text-decoration:none; font-size: small; margin: 0pt;'" th:fragment="rigaTagInTask"></a>
+								</span>
+								
+							</div>
 						</div>
 		
 		
@@ -101,11 +103,9 @@
 		 	<h2>Tags:</h2>
 			<ul th:fragment="elencoTag">
 				<li th:each="tag : ${project.tags}">
-					<div>
 					<p>
-						<a th:href="@{'~/projects/'+${project.id}+'/tags/'+${tag.id}}" th:text="${tag.name}" th:style="'color:' + ${tag.color}"></a>
+						<a th:href="@{'~/projects/'+${project.id}+'/tags/'+${tag.id}}" th:text="${tag.name}" th:style="'color:' + ${tag.color} + ';text-decoration:none;'" th:fragment="rigaTag"></a>
 					</p>
-					</div>
 				</li>
 			</ul>
 		</div>
