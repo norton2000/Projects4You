@@ -243,9 +243,6 @@ public class ProjectController {
 	private void preparaPerVistaProgetto(Model model, Project project) {
 		
 		List<User> members = userService.getMembers(project);
-		System.out.println("================================");
-		System.out.println(project.getTasks().size());
-		System.out.println("================================");
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
 		model.addAttribute("userToShare", new User()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto

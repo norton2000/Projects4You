@@ -119,11 +119,9 @@ public class TagController {
 		Tag tag = this.tagService.getTag(tag_id);
 		
 		if(project == null) {
-			System.out.println("project null");
 			return "redirect:/projects";
 		}
 		if(tag == null) {
-			System.out.println("tag null");
 			return "redirect:/projects/"+project_id;
 		}
 		if(!tag.getProject().equals(project) || !project.getOwner().equals(this.sessionData.getLoggedUser())) {
@@ -142,11 +140,9 @@ public class TagController {
 		Project project = this.projectService.getProject(project_id);
 		Task task = this.taskService.getTask(task_id);
 		if(project == null) {
-			System.out.println("project null");
 			return "redirect:/projects";
 		}
 		if(task == null) {
-			System.out.println("task null");
 			return "redirect:/projects/"+project_id;
 		}
 		if(!project.getOwner().equals(this.sessionData.getLoggedUser())) {
@@ -170,11 +166,9 @@ public class TagController {
 		Project project = this.projectService.getProject(project_id);
 		Task task = this.taskService.getTask(task_id);
 		if(project == null) {
-			System.out.println("project null");
 			return "redirect:/projects";
 		}
 		if(task == null) {
-			System.out.println("task null");
 			return "redirect:/projects/"+project_id;
 		}
 		if(!project.getOwner().equals(this.sessionData.getLoggedUser())) {
