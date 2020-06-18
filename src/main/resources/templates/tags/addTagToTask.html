@@ -16,13 +16,13 @@
 	<form th:action="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/tags/add'}"
 		method="POST" id="tagToTaskForm" th:object="${task}">
 	<ul>
-		<li th:each="tag : ${allTags}">
+		<li th:each="tag : ${allTags}" style="margin-bottom: 15px;">
 	  		<input type="checkbox" name="roles"
-            th:text="${tag.name}"
             th:value="${tag.id}"
             th:field="*{tags}"
             th:style="'color:' + ${tag.color}"
         />
+        <a th:text="${tag.name}" th:style="'color:' + ${tag.color} + ';font-size: 20px'"></a>
 		</li>
 	</ul>
 	  <input type="submit" value="Submit">

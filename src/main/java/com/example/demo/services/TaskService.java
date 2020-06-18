@@ -47,6 +47,7 @@ public class TaskService {
 		return this.taskRepository.save(task);
 	}
 	
+	@Transactional
 	public void assegnaTask(Task task, User user) {
 		task.setUser(user);
 		this.saveTask(task);

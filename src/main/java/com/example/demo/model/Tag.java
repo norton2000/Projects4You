@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.example.demo.services.TagService;
-
 @Entity
 public class Tag {
 	@Id
