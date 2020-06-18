@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.Colore;
+import com.example.demo.model.Commento;
 import com.example.demo.model.Project;
 import com.example.demo.model.Tag;
 import com.example.demo.model.Task;
@@ -102,7 +103,7 @@ public class TagController {
 			return "redirect:/projects/"+project_id; //TODO Bisognerebbe aggiungere un redirect ad una pagina di errore
 		}
 
-		
+		model.addAttribute("newComment", new Commento());
 		model.addAttribute("tag", tag);
 		model.addAttribute("project", project);
 		

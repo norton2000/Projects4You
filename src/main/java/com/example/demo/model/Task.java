@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -180,9 +181,11 @@ public class Task {
 	}
 
 	public void updateTag(List<Tag> tags) {
-		for (Tag tag : this.tags) {
+		Iterator<Tag> it = this.tags.iterator();
+		while(it.hasNext()) {
+			Tag tag = it.next();
 			if(!tags.contains(tag)) {
-				this.deleteTag(tag);
+				it.remove();
 				tag.removeTask(this);
 			}
 		}
