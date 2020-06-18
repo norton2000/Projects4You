@@ -208,15 +208,12 @@ public class TaskController {
 		
 		//TODO Per tutti e tre servirebbe la pagina di errore
 		if(project == null) {
-			System.out.println("project null");
 			return "redirect:/projects";
 		}
 		if(task == null) {
-			System.out.println("task null");
 			return "redirect:/projects/"+project_id;
 		}
 		if(!task.getProject().equals(project) || !project.getOwner().equals(this.sessionData.getLoggedUser())) {
-			System.out.println("terzo if");
 			return "redirect:/projects";
 		}
 		

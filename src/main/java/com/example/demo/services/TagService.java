@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Project;
 import com.example.demo.model.Tag;
-import com.example.demo.model.Task;
 import com.example.demo.repository.TagRepository;
 
 @Service
@@ -17,20 +17,24 @@ public class TagService {
 	private TagRepository tagRepository;
 	
 	
+	@Transactional
 	public Tag saveTag(Tag tag) {
 		return this.tagRepository.save(tag);
 	}
 	
+	@Transactional
 	public Tag saveTag(Tag tag, Project project) {
 		tag.setProject(project);
 		return this.tagRepository.save(tag);
 	}
 	
+	@Transactional
 	public Tag getTag(Long id) {
 		Optional<Tag> result = this.tagRepository.findById(id);
 		return result.orElse(null);
 	}
 	
+	@Transactional
 	public void deleteTag(Tag tag) {
 		tag.deleteSelf();
 		tagRepository.delete(tag);
