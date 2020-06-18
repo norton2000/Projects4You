@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.example.demo.model.Project;
-import com.example.demo.model.User;
-import com.example.demo.repository.ProjectRepository;
-import com.example.demo.repository.TaskRepository;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.services.ProjectService;
-import com.example.demo.services.UserService;
+import it.uniroma3.projects4you.model.Project;
+import it.uniroma3.projects4you.model.User;
+import it.uniroma3.projects4you.repository.ProjectRepository;
+import it.uniroma3.projects4you.repository.TaskRepository;
+import it.uniroma3.projects4you.repository.UserRepository;
+import it.uniroma3.projects4you.services.ProjectService;
+import it.uniroma3.projects4you.services.UserService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
