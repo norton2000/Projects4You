@@ -16,8 +16,8 @@
 		
 		
 			<button onclick="visualizzaAreaShare()">Share with another user</button>
-			<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button> </a>
-			<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button> </a>
+			<a th:href="@{'~/projects/'+${project.id}+'/delete'}"><button>Delete Project</button></a>
+			<a th:href="@{'~/projects/'+${project.id}+'/edit'}"><button>Edit Project</button></a>
 			<div id="areaShare" hidden="true">
 				<form class="formShare" th:object="${userToShare}"
 					th:action="@{'~/projects/'+${project.id}+'/share'}" method="POST">
@@ -44,6 +44,7 @@
 				<li th:each="task : ${project.tasks}">
 					<div class="linkGestioneTask">
 						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/assegna'}">Assign</a>
+						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/tags/add'}">Tags</a>
 						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/edit'}">Edit</a>
 						<a th:href="@{'~/projects/'+${project.id}+'/tasks/'+${task.id}+'/delete'}">Delete</a>
 					</div>
@@ -53,7 +54,14 @@
 		</div>
 		<div class="column right">
 			<h2>Tags:</h2>
-			<ul th:replace="fragments/project.html :: elencoTag"></ul>
+			<ul>
+				<li th:each="tag : ${project.tags}">
+					<p>
+						<a th:replace="fragments/project.html :: rigaTag"></a>
+						<a style="text-decoration:none; color: red; font-weight: bold; padding: 5pt;" th:href="@{'~/projects/'+${project.id}+'/tags/'+${tag.id}+'/delete'}">[-]</a>
+					</p>
+				</li>
+			</ul>
 			<a th:href="@{'~/projects/'+${project.id}+'/tags/add'}"><button>Add new Tag</button></a>
 		</div>
 	</div>

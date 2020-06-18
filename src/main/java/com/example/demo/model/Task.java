@@ -149,6 +149,32 @@ public class Task {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
+	
+	public void deleteTag(Tag tag) {
+		this.tags.remove(tag);
+	}
+	
+	public void addTag(Tag tag) {
+		if(!tags.contains(tag))
+			tags.add(tag);
+	}
+	
+	public boolean containsTag(Tag tag) {
+		return this.tags.contains(tag);
+	}
+	
+	public void updateTag(List<Tag> tags) {
+		for (Tag tag : this.tags) {
+			if(!tags.contains(tag)) {
+				this.deleteTag(tag);
+				tag.removeTask(this);
+			}
+		}
+		for (Tag tag : tags) {
+			this.addTag(tag);
+			tag.addTask(this);
+		}
+	}
 
 	@Override
 	public int hashCode() {
@@ -190,11 +216,9 @@ public class Task {
 		return true;
 	}
 
+	public boolean removeTag(Tag tag) {
+		return this.tags.remove(tag);
+	}
 
 
-
-
-	
-	
-	
 }

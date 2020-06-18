@@ -124,6 +124,14 @@ public class Project {
 			member.deleteVisibleProject(this);
 		}
 	}
+	
+	public boolean containsTag(Tag tag) {
+		return this.tags.contains(tag);
+	}
+	
+	public void deleteTag(Tag tag) {
+		this.tags.remove(tag);
+	}
 
 	@Override
 	public int hashCode() {
@@ -149,6 +157,8 @@ public class Project {
 			return false;
 		return true;
 	}
+
+	
 
 
 

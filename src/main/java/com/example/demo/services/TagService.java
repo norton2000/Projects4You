@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Project;
 import com.example.demo.model.Tag;
+import com.example.demo.model.Task;
 import com.example.demo.repository.TagRepository;
 
 @Service
@@ -30,4 +31,8 @@ public class TagService {
 		return result.orElse(null);
 	}
 	
+	public void deleteTag(Tag tag) {
+		tag.deleteSelf();
+		tagRepository.delete(tag);
+	}
 }
