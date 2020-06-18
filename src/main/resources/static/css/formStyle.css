@@ -1,0 +1,27 @@
+form div{
+	margin: 15px;
+}
+
+.formTitle{
+	font-style: italic;
+}
+
+label.formLabel{
+	font-size: 24px;
+}
+
+input[type="text"],[type="password"]{
+	height: 20px;
+	
+}
+
+input[type="submit"]{
+	padding: 8px 16px;
+	background-color: inherit;
+	border-color: black;
+}
+
+#descriptionArea{
+	resize: none;
+	width: 100%;
+}

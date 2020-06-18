@@ -2,12 +2,16 @@
 <html lang="en"
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="https://www.thymeleaf.org">
-<head>
-	<title>TaskManager</title>
+<head >
+	<th:block th:replace = "/fragments/base.html :: head"></th:block>
+	<link th:href = "@{/css/indexStyle.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Welcome!</h1>
-<p> <a href="/home">Login</a></p>
-<p> <a href="/users/register">Register</a></p>
+
+<div align="center" class="divIndexButton">
+	<h1>Welcome!</h1>
+	<div align="center" class="indexButtonArea"><a href="/home"><button class="indexButton">Login</button></a></div>
+	<div align="center" class="indexButtonArea"><a href="/users/register"><button class="indexButton">Register</button></a></div>
+</div>
 </body>
 </html>
