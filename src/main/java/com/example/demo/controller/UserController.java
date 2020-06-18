@@ -72,6 +72,13 @@ public class UserController {
 
 	@RequestMapping(value = {"/admin/users/{username}/delete"}, method = RequestMethod.POST)
 	public String removeUser(Model model, @PathVariable String username) {
+		Credentials credentials = this.credentialsService.getCredentials(username);
+		if(credentials == null) {
+			return "redirect:/admin/users";
+		}
+		User user = credentials.getUser();
+		user.deleteSelf();
+		
 		this.credentialsService.deleteCredentials(username);
 		return "redirect:/admin/users";
 	}
