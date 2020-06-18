@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="en"
-	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="https://www.thymeleaf.org"
-	  th:fragment = "formProject(operazione)">
-<head th:replace = "fragments/base.html :: head">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	th:fragment="formProject(operazione)">
+<head>
+<th:block th:insert="fragments/base.html :: head"></th:block>
+<link rel="stylesheet" type="text/css" th:href="@{/css/formStyle.css}">
 </head>
 <body>
-	<h1>Register new Project</h1>
-	<form id="registerUserForm"
-		th:action = "@{'/projects/'+${operazione}}"
-		method="POST"
-		th:object = "${projectForm}">
-		<table>
-			<tr>
-				<td><label for="projectNameInput">Project Name</label></td>
-				<td><input id=projectNameInput type="text" placeholder="NAME" required th:field="*{name}"/></td>
-				<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:style="'color:red'"></td>
-			</tr>
-			<tr>
-				<td><label for="descriptionInput">Description</label></td>
-				<td><input id=descriptionInput placeholder="DESCRIPTION" th:field="*{description}"/></td>
-				<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:style="'color:red'"></td>
-			</tr>
-			<tr>
-				<td><button type="submit">Confirm</button></td>
-			</tr>
-		</table>
+	<h1 align="center" class="formTitle">Register new Project</h1>
+	<form id="registerProjectForm" th:action="@{'/projects/'+${operazione}}"
+		method="POST" th:object="${projectForm}">
+
+
+		<div align="center">
+			<label class="formLabel" for="projectNameInput">Project Name</label>
+		</div>
+		<div align="center">
+			<input id=projectNameInput type="text" placeholder="NAME" required
+				th:field="*{name}" /> <span th:if="${#fields.hasErrors('name')}"
+				th:errors="*{name}" th:style="'color:red'"></span>
+		</div>
+
+
+		<div align="center">
+			<label class="formLabel" for="descriptionArea">Description</label><span
+				th:if="${#fields.hasErrors('description')}"
+				th:errors="*{description}" th:style="'color:red'"></span>
+		</div>
+		<div align="center">
+			<textarea id="descriptionArea" th:field="*{description}"
+				form="registerProjectForm" wrap="hard" rows="10" maxlength="100"></textarea>
+		</div>
+
+
+		<div align="center">
+			<input type="submit" value="Confirm">
+		</div>
+
+
 	</form>
-	
-	<footer th:replace = "fragments/base.html :: pagesFooter">
-	</footer>
+
+	<footer th:replace="fragments/base.html :: pagesFooter"> </footer>
 </body>
 </html>
