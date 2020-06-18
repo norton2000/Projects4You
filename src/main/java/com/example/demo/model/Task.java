@@ -62,6 +62,24 @@ public class Task {
 		this.description = description;
 		this.completed = completed;
 	}
+	
+	
+	
+	public void deassignIfAssigned(User user) {
+		
+		if(this.user == null || user == null) {
+			return;
+		}
+		if(this.user.equals(user))
+			this.user = null;
+	}
+	public void removeUserComments(User user) {
+		for (Commento commento : commenti) {
+			if(commento.getLeavedBy().equals(user))
+				commento.setLeavedBy(null);
+		}
+	}
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -187,6 +205,10 @@ public class Task {
 			return false;
 		return true;
 	}
+
+
+
+	
 
 
 

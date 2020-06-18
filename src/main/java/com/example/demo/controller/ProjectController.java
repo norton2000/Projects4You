@@ -75,7 +75,7 @@ public class ProjectController {
 		Project project = this.projectService.getProject(project_id);
 		
 		if(project == null)
-			return "redirect:/projects/myProjects/";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/myProjects";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		
 		User loggedUser = this.sessionData.getLoggedUser();
 		
@@ -84,7 +84,7 @@ public class ProjectController {
 		}else if(project.getMembers().contains(loggedUser)) {
 			return "redirect:/projects/sharedWithMe/"+project_id;
 		}
-		return "redirect:/projects/myProjects/";
+		return "redirect:/projects/myProjects";
 	}
 	
 	@RequestMapping(value = {"/projects/add"}, method = RequestMethod.GET)
@@ -243,6 +243,9 @@ public class ProjectController {
 	private void preparaPerVistaProgetto(Model model, Project project) {
 		
 		List<User> members = userService.getMembers(project);
+		System.out.println("================================");
+		System.out.println(project.getTasks().size());
+		System.out.println("================================");
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
 		model.addAttribute("userToShare", new User()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto

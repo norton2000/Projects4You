@@ -59,6 +59,25 @@ public class User {
 		creationTimestamp = LocalDateTime.now();
 		lastUpdateTimestamp = creationTimestamp;
 	}
+	
+	
+	
+	
+	public void deleteSelf() {
+		for (Project project : visibleProjects) {
+			project.removeMember(this);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public Long getId() {
 		return id;
@@ -118,6 +137,8 @@ public class User {
 	}
 	
 	
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -164,5 +185,6 @@ public class User {
 	public void deleteVisibleProject(Project project) {
 		this.visibleProjects.remove(project);
 	}
-	
+
+
 }
