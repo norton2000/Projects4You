@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="https://www.thymeleaf.org">
 <head th:fragment="tagHead">
-<th:block th:insert="fragments/base.html :: head"></th:block>
+<th:block th:insert="fragments/project.html :: projectHead"></th:block>
 <link th:href="@{/css/projectStyle.css}" rel="stylesheet" />
 <script type="text/javascript" th:src="@{/javascript/projectScript.js}"></script>
 </head>
@@ -15,7 +15,7 @@
 		<h3>task:</h3>
 		<ul>
 			<li th:each="task : ${tag.tasks}">
-				<div class="taskListItem" th:replace="taskListItem">
+				<div class="taskListItem" th:replace="fragments/project.html :: taskListItem">
 				</div>
 			</li>
 		</ul>
