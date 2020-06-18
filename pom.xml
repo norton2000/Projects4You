@@ -40,20 +40,21 @@
       <version>2.0.1.Final</version> 
     </dependency>  
     
-    <!-- Scegli un solo di questi due DB  -->
+    <!-- Scegli un solo di questi due DB  
     <dependency>
 		<groupId>org.postgresql</groupId>
 		<artifactId>postgresql</artifactId>
 		<scope>runtime</scope>
 	</dependency>
+	-->
 
-    <!--
+    <!--  -->
     <dependency> 
       <groupId>com.microsoft.sqlserver</groupId>  
       <artifactId>mssql-jdbc</artifactId>  
       <version>8.1.0.jre8-preview</version> 
     </dependency>  
-     -->
+     <!--  -->
     
     
     <dependency> 
