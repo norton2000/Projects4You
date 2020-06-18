@@ -2,11 +2,11 @@
 <html lang="en"
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="https://www.thymeleaf.org"
-	  th:fragment = "listaProgetti(link)">
+	  th:fragment = "listaProgetti(link, titolo)">
 <head th:replace = "fragments/base.html :: head">
 </head>
 <body>
-<h1>My Projects</h1>
+<h1 th:text="${titolo}">My Projects</h1>
 <div>
 	<table>
 		<thead>
