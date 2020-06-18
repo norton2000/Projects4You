@@ -49,6 +49,25 @@ public class Project {
 		this.description = description;
 	}
 	
+	
+	
+	
+	
+	public void removeMember(User user) {
+		this.members.remove(user);
+		user.deleteVisibleProject(this);
+		for(Task task : tasks) {
+			task.deassignIfAssigned(user);
+			task.removeUserComments(user);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}

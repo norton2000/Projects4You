@@ -23,39 +23,39 @@ public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column(nullable=false, length = 100)
 	private String name;
-	
+
 	@Column(nullable=false, length = 2500)
 	private String description;
-	
+
 	@Column(nullable = false)
 	private boolean completed;
-	
+
 	@ManyToOne
 	private User user;
-	
+
 	@ManyToOne
 	private Project project;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "task_id")
 	private List<Commento> commenti;
-	
-	
+
+
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime creationTimestamp;
-	
+
 	@Column(nullable = false)
 	@UpdateTimestamp
 	private LocalDateTime lastUpdateTimestamp;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Tag> tags;
-	
+
 	public Task() {}
-	
+
 	public Task(String name, String description, boolean completed) {
 		this();
 		this.name = name;
@@ -63,10 +63,28 @@ public class Task {
 		this.completed = completed;
 	}
 
+
+
+	public void deassignIfAssigned(User user) {
+
+		if(this.user == null || user == null) {
+			return;
+		}
+		if(this.user.equals(user))
+			this.user = null;
+	}
+	public void removeUserComments(User user) {
+		for (Commento commento : commenti) {
+			if(commento.getLeavedBy().equals(user))
+				commento.setLeavedBy(null);
+		}
+	}
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Long getId() {
 		return this.id;
 	}
@@ -118,10 +136,8 @@ public class Task {
 	public void setLastUpdateTimestamp(LocalDateTime lastUpdateTimestamp) {
 		this.lastUpdateTimestamp = lastUpdateTimestamp;
 	}
-	public void updateLastUpdateTimestamp() {
-		this.setLastUpdateTimestamp(LocalDateTime.now());
-	}
-	
+
+
 	public User getUser() {
 		return user;
 	}
@@ -137,11 +153,11 @@ public class Task {
 	public void setCommenti(List<Commento> commenti) {
 		this.commenti = commenti;
 	}
-	
+
 	public void addComment(Commento commento) {
 		this.commenti.add(commento);
 	}
-	
+
 	public List<Tag> getTags() {
 		return tags;
 	}
@@ -149,20 +165,20 @@ public class Task {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-	
+
 	public void deleteTag(Tag tag) {
 		this.tags.remove(tag);
 	}
-	
+
 	public void addTag(Tag tag) {
 		if(!tags.contains(tag))
 			tags.add(tag);
 	}
-	
+
 	public boolean containsTag(Tag tag) {
 		return this.tags.contains(tag);
 	}
-	
+
 	public void updateTag(List<Tag> tags) {
 		for (Tag tag : this.tags) {
 			if(!tags.contains(tag)) {
@@ -219,6 +235,4 @@ public class Task {
 	public boolean removeTag(Tag tag) {
 		return this.tags.remove(tag);
 	}
-
-
 }

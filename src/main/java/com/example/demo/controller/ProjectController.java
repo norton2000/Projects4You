@@ -75,7 +75,7 @@ public class ProjectController {
 		Project project = this.projectService.getProject(project_id);
 		
 		if(project == null)
-			return "redirect:/projects/myProjects/";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
+			return "redirect:/projects/myProjects";  //TODO Bisognerebbe fare un redirect ad una pagina di errore
 		
 		User loggedUser = this.sessionData.getLoggedUser();
 		
@@ -84,7 +84,7 @@ public class ProjectController {
 		}else if(project.getMembers().contains(loggedUser)) {
 			return "redirect:/projects/sharedWithMe/"+project_id;
 		}
-		return "redirect:/projects/myProjects/";
+		return "redirect:/projects/myProjects";
 	}
 	
 	@RequestMapping(value = {"/projects/add"}, method = RequestMethod.GET)
@@ -163,6 +163,7 @@ public class ProjectController {
 		
 		this.projectValidator.validate(projectModificato, errors);
 		if(errors.hasErrors()) {
+			projectModificato.setId(project_id);
 			return "projects/editProject";
 		}
 		project.setName(projectModificato.getName());
@@ -189,25 +190,25 @@ public class ProjectController {
 		
 		List<User> members = userService.getMembers(project);
 		model.addAttribute("loggedUser", loggedUser);
-		this.preparaPerVistaProgetto(model, project);
+		model.addAttribute("project", project);
+		model.addAttribute("members", members);
+		model.addAttribute("newComment", new Commento());
 	
-		userToShare = this.userService.getUser(userToShare.getNickname());
-		if(userToShare == null) {
+		User user = this.userService.getUser(userToShare.getNickname());
+		if(user == null) {
 			errors.rejectValue("nickname", "notExists");
-			model.addAttribute("userToShare", userToShare);
 			return "projectOwned";
 		}
 		
 		//Se sto cercando di condividere con me stesso o se chi cerco è già membro del progetto
-		if(userToShare.equals(loggedUser) || members.contains(userToShare)) {
+		if(user.equals(loggedUser) || members.contains(user)) {
 			errors.rejectValue("nickname", "alreadyMember");
-			model.addAttribute("userToShare", userToShare);
 			return "projectOwned";
 		}
-		project.addMember(userToShare);
+		project.addMember(user);
 		this.projectService.saveProject(project);
 		
-		return "projectOwned";
+		return "redirect:/projects/"+id_progetto;
 	}
 	
 	@GetMapping(value = "/projects/sharedWithMe")
@@ -242,6 +243,9 @@ public class ProjectController {
 	private void preparaPerVistaProgetto(Model model, Project project) {
 		
 		List<User> members = userService.getMembers(project);
+		System.out.println("================================");
+		System.out.println(project.getTasks().size());
+		System.out.println("================================");
 		model.addAttribute("project", project);
 		model.addAttribute("members", members);
 		model.addAttribute("userToShare", new User()); //evenutale campo in cui l'utente potrà inserire lo username di qualcuno con cui vuole condividere il progetto

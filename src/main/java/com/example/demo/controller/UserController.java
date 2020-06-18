@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -71,6 +72,13 @@ public class UserController {
 
 	@RequestMapping(value = {"/admin/users/{username}/delete"}, method = RequestMethod.POST)
 	public String removeUser(Model model, @PathVariable String username) {
+		Credentials credentials = this.credentialsService.getCredentials(username);
+		if(credentials == null) {
+			return "redirect:/admin/users";
+		}
+		User user = credentials.getUser();
+		user.deleteSelf();
+		
 		this.credentialsService.deleteCredentials(username);
 		return "redirect:/admin/users";
 	}
@@ -78,9 +86,7 @@ public class UserController {
     @GetMapping(value = {"/users/modify"})
     public String getModifyUserPage(Model model) {
     	User userLoggato = this.sessionData.getLoggedUser();
-    	User user = new User(userLoggato.getFirstname()	, userLoggato.getLastname());
-    	model.addAttribute("userForm", user); 	
-
+    	model.addAttribute("userForm", userLoggato); 
     	return "modificaUser";
     }
 
@@ -90,7 +96,7 @@ public class UserController {
     						Model model)
     {
     	User userLoggato = this.sessionData.getLoggedUser();
-    	this.userValidator.validate(newValues, errors);
+    	this.userValidator.validateUpdate(newValues, errors);
     	if(!errors.hasErrors()) {
     		userLoggato.setFirstname(newValues.getFirstname());
     		userLoggato.setLastname(newValues.getLastname());
@@ -98,7 +104,7 @@ public class UserController {
     		this.userService.saveUser(userLoggato);
     		model.addAttribute("credentials", this.sessionData.getLoggedCredentials());
     		model.addAttribute("loggedUser", userLoggato);
-    		return "userProfile";
+    		return "redirect:/users/me";
     	}
     	return "modificaUser";
     }

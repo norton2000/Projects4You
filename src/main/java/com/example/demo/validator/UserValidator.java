@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.example.demo.controller.session.SessionData;
 import com.example.demo.model.User;
 import com.example.demo.services.UserService;
 
@@ -16,6 +17,8 @@ public class UserValidator implements Validator {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SessionData sessionData;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -46,6 +49,33 @@ public class UserValidator implements Validator {
 		else if(lastname.length() < MIN_NAME_LENGTH || lastname.length() > MAX_NAME_LENGTH)
 			errors.rejectValue("lastname", "size");
 		
+	}
+	
+	public void validateUpdate(User user, Errors errors) {
+		String firstname = user.getFirstname().trim();
+		String lastname = user.getLastname().trim();
+		String nickname = user.getNickname().trim();
+		User userLoggato = this.sessionData.getLoggedUser();
+		
+		if(nickname.isEmpty())
+			errors.rejectValue("nickname", "required");
+		else if(nickname.length()<MIN_NAME_LENGTH || nickname.length() > MAX_NAME_LENGTH)
+			errors.rejectValue("nickname", "size");
+		else if(userLoggato != null) {
+				if (!userLoggato.getNickname().equals(nickname) && this.userService.getUser(nickname) != null)
+					errors.rejectValue("nickname", "duplicate");
+		}else if(this.userService.getUser(nickname) != null)
+			errors.rejectValue("nickname", "duplicate");
+			
+		if(firstname.isEmpty())
+			errors.rejectValue("firstname", "required");
+		else if(firstname.length() < MIN_NAME_LENGTH || firstname.length() > MAX_NAME_LENGTH)
+			errors.rejectValue("firstname", "size");
+		
+		if(lastname.isEmpty())
+			errors.rejectValue("lastname", "required");
+		else if(lastname.length() < MIN_NAME_LENGTH || lastname.length() > MAX_NAME_LENGTH)
+			errors.rejectValue("lastname", "size");
 	}
 
 }

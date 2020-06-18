@@ -42,7 +42,16 @@ public class TaskController {
 	
 	@GetMapping(value = "/projects/{id}/tasks/add")
 	public String startAddNewTask(@PathVariable("id") Long project_id, Model model) {
-		model.addAttribute("project", this.projectService.getProject(project_id));
+		Project project = this.projectService.getProject(project_id);
+		
+		if(project ==  null) {
+			return "redirect:/projects";
+		}
+		if(!project.getOwner().equals(this.sessionData.getLoggedUser())) {
+			return "redirect:/projects";
+		}
+		
+		model.addAttribute("project", project);
 		model.addAttribute("task", new Task());
 		return "tasks/formAddTask";
 	}
@@ -176,8 +185,8 @@ public class TaskController {
 		this.taskValidator.validateEdit(project, taskDaModificare, task, taskErrors);
 		
 		if(taskErrors.hasErrors()) {
+			task.setId(task_id);
 			model.addAttribute("project", project);
-			model.addAttribute("task", task);
 			return "tasks/formEditTask";
 		}
 		

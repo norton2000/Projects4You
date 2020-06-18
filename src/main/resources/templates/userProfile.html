@@ -16,7 +16,7 @@
 		<tr th:object ="${loggedUser.lastUpdateTimestamp}"><td>Last Update at:</td><td th:text="*{dayOfMonth}+'/'+*{month}+'/'+*{year}+' - '+*{hour}+' : '+*{minute}"></td></tr>
 	</table>
 	
-	<a th:href="@{/users/modify}">Modifica Profilo</a>
+	<a th:href="@{/users/modify}">Edit</a>
 	
 	<footer th:replace = "fragments/base.html :: pagesFooter"></footer>
 </body>
