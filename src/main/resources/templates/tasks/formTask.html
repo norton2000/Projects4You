@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org"
-		th:fragment = "formTask(operazione)">
+	th:fragment="formTask(operazione)">
 <head>
 <th:block th:insert="fragments/base.html :: head"></th:block>
-<link th:href="@{/css/taskFormStyle.css}" rel="stylesheet" />
+<link th:href="@{/css/formStyle.css}" rel="stylesheet" />
 </head>
 <body>
 	<div th:if="${#fields.hasErrors('task')}">
 		<span th:errors="${task}" th:style="color:red"></span>
 	</div>
-	<h1>Add new Task</h1>
-	<form th:action="@{'~/projects/'+${project.id}+'/tasks/'+${operazione}}" method="POST"
-		th:object="${task}" id="taskForm">
-		<div class="taskFormDiv">
-			<label for="taskName">Task name: </label>
+	<h1 class="formTitle" align="center">Add new Task</h1>
+	<form
+		th:action="@{'~/projects/'+${project.id}+'/tasks/'+${operazione}}"
+		method="POST" th:object="${task}" id="taskForm">
+		<div class="taskFormDiv" align="center">
+			<label class="formLabel" for="taskName">Task name: </label>
 		</div>
-		<input type="text" required th:field="*{name}" />
-		<span th:if="${#fields.hasErrors('name')}"
-					th:errors="*{name}" th:style="'color:red'"></span>
-		<div class="taskFormDiv">
-			<label for="taskDescription">Task Description:</label>
-			<span th:if="${#fields.hasErrors('description')}"
-					th:errors="*{description}" th:style="color:red"></span>
+		<div class="taskFormDiv" align="center">
+			<input type="text" required th:field="*{name}" /> <span
+				th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+				th:style="'color:red'"></span>
 		</div>
-		<div class="taskFormDiv">
+		<div class="taskFormDiv" align="center">
+			<label class="formLabel" for="taskDescription">Task
+				Description:</label> <span th:if="${#fields.hasErrors('description')}"
+				th:errors="*{description}" th:style="color:red"></span>
+		</div>
+		<div class="taskFormDiv" align="center">
 			<textarea id="descriptionArea" th:field="*{description}"
 				form="taskForm" wrap="hard" rows="10" maxlength="2500"></textarea>
 		</div>
-		<div class="taskFormDiv" align="center"><input type="submit" value="Confirm"></div>
+		<div class="taskFormDiv" align="center">
+			<input type="submit" value="Confirm">
+		</div>
 	</form>
 	<footer th:replace="fragments/base.html :: pagesFooter"></footer>
 </body>

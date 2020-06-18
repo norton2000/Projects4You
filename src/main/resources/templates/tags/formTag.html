@@ -3,18 +3,18 @@
 <head>
 <th:block th:insert="fragments/base.html :: head"></th:block>
 
-<link th:href="@{/css/taskFormStyle.css}" rel="stylesheet"
-	href="../../static/css/tagFormStyle.css">
+<link th:href="@{/css/formStyle.css}" rel="stylesheet"
+	href="../../static/css/formStyle.css">
 </head>
 <body>
-	<h1>Add new Tag</h1>
+	<h1 align="center" class="formTitle">Add new Tag</h1>
 	<form th:action="@{'~/projects/'+${project.id}+'/tags/add'}"
 		method="POST" id="tagForm">
 
 
-				<div class="area">
-					<div class="tagFormDiv">
-						<label for="tagName">Tag name: </label>
+				<div class="area" align="center">
+					<div class="tagFormDiv" align="center">
+						<label class="formLabel" for="tagName">Tag name: </label>
 					</div>
 
 
@@ -23,9 +23,9 @@
 						th:style="'color:red'"></span>
 				</div>
 
-				<div class="area">
+				<div class="area" align="center">
 					<div class="tagFormDiv">
-						<label for="tagColor">Tag color: </label>
+						<label class="formLabel" for="tagColor">Tag color: </label>
 					</div>
 					<select th:field="${tag.color}">
 						<option th:each="colore : ${colori}" th:value="${colore}" th:text="${colore}"></option>
@@ -33,17 +33,17 @@
 				</div>
 
 
-		<div class="tagFormDiv">
-			<label for="tagDescription">Tag Description:</label> <span
+		<div class="tagFormDiv" align="center">
+			<label for="tagDescription" class="formLabel">Tag Description:</label> <span
 				th:if="${#fields.hasErrors('tag.description')}"
 				th:errors="${tag.description}" th:style="color:red"></span>
 		</div>
-		<div class="tagFormDiv">
+		<div class="tagFormDiv" align="center">
 			<textarea id="descriptionArea" th:field="${tag.description}"
 				form="tagForm" wrap="hard" rows="10" maxlength="1000"></textarea>
 		</div>
 		<div class="tagFormDiv" align="center">
-			<input type="submit">
+			<input type="submit" value="Confirm">
 		</div>
 	</form>
 	<footer th:replace="fragments/base.html :: pagesFooter"></footer>

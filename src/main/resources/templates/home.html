@@ -2,16 +2,18 @@
 <html lang="en"
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="https://www.thymeleaf.org">
-<head th:replace = "fragments/base.html :: head">
+<head >
+	<th:block th:insert = "fragments/base.html :: head"></th:block>
+	<link th:href="@{/css/homeStyle.css}" rel="stylesheet">
 </head>
 <body>
 
-<h1 th:text = "'Welcome, ' + ${user.firstname} + '!'"></h1>
-<h4><a href="/projects/myProjects">My Projects</a></h4>
-<h4><a href="/projects/add">Create new Project</a></h4>
-<h4><a href="/projects/sharedWithMe">Shared With Me</a></h4>
-<h4><a href="/users/me">Profile</a></h4>
-<h4><a href="/logout">Logout</a></h4>
+<h1 align="center" th:text = "'Welcome, ' + ${user.firstname} + '!'"></h1>
+<div align="center"><a href="/projects/myProjects">My Projects</a></div>
+<div align="center"><a href="/projects/add">Create new Project</a></div>
+<div align="center"><a href="/projects/sharedWithMe">Shared With Me</a></div>
+<div align="center"><a href="/users/me">Profile</a></div>
+<div align="center"><a href="/logout">Logout</a></div>
 
 </body>
 </html>

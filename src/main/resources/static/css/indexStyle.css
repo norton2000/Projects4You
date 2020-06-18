@@ -1,0 +1,18 @@
+button.indexButton {
+	transition-duration: 0.4s;
+  	border-radius: 12px;
+  	width: 35%;
+  	font-size: 16px;
+  	padding: 16px 32px;
+  	cursor: pointer;
+  	background-color: #46C7C7; 
+}
+button.indexButton:hover {
+  background-color: #4CAF50; /* Green */
+  color: #B4CFEC;
+}
+
+div.indexButtonArea{
+	margin: 5%;
+}
+
