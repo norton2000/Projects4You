@@ -63,6 +63,10 @@ NOTA: Nei successivi casi d'uso si parlerà direttamente di "utente loggato", ov
 -L'utente ripete il passo 4 quante volte vuole-
 5. Quando ha finito di tagliare via gente, l'utente può premere il tasto home per uscire dalla lista.
 
+-- Cancellazione di un utente (estensioni)
+4a. Se l'utente selezionato è l'utente loggato stesso, il sistema invalida l'autenticazione, cancella i dati dell'utente
+	e reindirizza l'utente alla pagina index
+
 
 
 
