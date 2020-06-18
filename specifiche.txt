@@ -1,0 +1,267 @@
+Projects4You  --- Specifiche dei casi d'uso
+
+
+
+----------------- CASI D'USO USER -------------------
+
+--Registrazione (scenario principale di successo)
+
+1. L'utente accede alla pagina index.html del sito.
+2. L'utente clicca il link "Register" per accedere alla pagina di registrazione.
+3. L'utente inserisce uno username (univoco) ed una password che costituiscono le credenziali per l'accesso. 
+	Inoltre inserisce un nickname (univoco) che serve per il riconoscimento degli utenti tra loro (share dei progetti), il nome ed il cognome.
+4. L'utente clicca il tasto conferma, il sistema valida e registra i dati e l'utente viene mandato alla pagina di conferma registrazione.
+5. Dalla pagina di registrazione l'utente può tornare all'index o cliccare su home per autenticarsi ed accedere alla propria home.
+
+-Registrazione (estensioni)
+4a. Se i dati inseriti non sono validi (nickname o username non univoci, o nome e cognome di lunghezze non adatte) il sistema invalida i dati e riporta l'utente alla pagina di registrazione mostrando gli errori.
+
+
+
+
+-- Login (scenario principale di successo)
+1. L'utente accede alla pagina index.html del sito.
+2. L'utente clicca il link "Login" per accedere alla pagina di registrazione.
+3. L'utente inserisce le sue credenziali di accesso (username e password) e preme Login. Il sistema valida i dati e porta l'utente alla schermata home.
+
+- Login (estensioni)
+3a. Username o password non sono corrette, il sistema invalida l'accesso e riporta l'utente alla pagina di login, mostrando un messaggio di errore.
+
+
+NOTA: Nei successivi casi d'uso si parlerà direttamente di "utente loggato", ovvero che ha eseguito l'operazione di login con successo.
+
+
+
+
+-- Visualizzare il profilo (scenario principale di successo)
+1. L'utente loggato accede alla sua pagina home (direttamente dopo il login oppure da un link in una delle altre pagine del sito).
+2. L'utente clicca sul link "Profile".
+3. Il sistema mostra all'utente la pagina con il dati del suo profilo (username, nickname, nome, cognome).
+
+
+
+
+-- Aggiornare il profilo (scenario principale di successo)
+1. L'utente loggato accede alla sua pagina di profilo (caso d'uso sopra)
+2. L'utente clicca sul link "Edit" sotto i suoi dati.
+3. Il sistema mostra all'utente una form precompilata con i suoi dati attuali che possono essere modificati. (nickname, nome, cognome).
+4. L'utente compila la form e preme "Edit".
+5. Il sistema valida i dati e li salva, dopodiché riporta l'utente alla visualizzazione del profilo.
+
+- Aggiornare il profilo (estensioni)
+5a. L'utente ha inserito dati non validi, il sistema invalida i dati e restituisce la pagina con la form, mostrando dove sono gli errori.
+
+
+
+----------------- CASI D'USO ADMIN -------------------
+ 
+-- Cancellazione di un utente (scenario principale di successo)
+1. Un utente loggato con ruolo admin accede alla pagina /admin (non ci sono link, ma va fatto inserendo il path nella barra degli indirizzi).
+2. Il sistema mostra la pagina di admin.
+3. L'utente admin clicca sul link "All Users List", il sistema mostra l'elenco degli utenti registrati.
+4. L'utente admin può cliccare il tasto "delete" accanto al nome di un utente per eliminarlo. Il sistema mostra la lista aggiornata.
+-L'utente ripete il passo 4 quante volte vuole-
+5. Quando ha finito di tagliare via gente, l'utente può premere il tasto home per uscire dalla lista.
+
+-- Cancellazione di un utente (estensioni)
+4a. Se l'utente selezionato è l'utente loggato stesso, il sistema invalida l'autenticazione, cancella i dati dell'utente
+	e reindirizza l'utente alla pagina index
+
+
+
+
+
+----------------- CASI D'USO PROJECT -------------------
+
+-- Creazione nuovo progetto (scenario principale di successo)
+1. L'utente loggato clicca sul link "Create new Project" nella pagina home. Il sistema mostra una form per la creazione del progetto.
+2. L'utente inserisce nome e descrizione del progetto, e conferma.
+3. Il sistema valida i dati e li registra, il sistema mostra all'utente la pagina del progetto.
+
+- Creazione nuovo progetto (estensioni)
+3a. I dati inseriti non sono validi (nome troppo corto o nome o descrizione troppo lunghe), il sistema invalida i dati e mostra nuovamente all'utente la pagina di form,
+	precompilata con i dati già immessi. Inoltre mostra gli errori.
+
+
+
+
+-- Visualizzare i miei progetti (scenario principale di successo)
+1. L'utente loggato clicca sul link "My Projects" nella pagina home. Il sistema mostra l'elenco di tutti i progetti creati dall'utente.
+2. L'utente clicca sul nome di un progetto per visualizzarlo. Il sistama mostra la pagina di visualizzazione del proprio progetto con i dati del progetto scelto.
+
+
+
+
+-- Visualizzare i progetti condivisi con me (scenario principale di successo)
+1. L'utente loggato clicca sul link "Shared with me" nella pagina home. Il sistema mostra l'elenco di tutti i progetti creati dall'utente.
+2. L'utente clicca sul nome di un progetto per visualizzarlo. Il sistema mostra la pagina di visualizzazione del progetto condiviso con i dati del progetto scelto.
+
+
+NOTA: I successivi casi d'uso per PROJECT sono validi solo per i progetti creati dall'utente, non per quelli condivisi.
+
+-- Aggiornare i dati di un mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei propri progetti. (Vedere caso d'uso visualizzazione). 
+2. Nella pagina di visualizzazione del proprio progetto l'utente clicca il bottone "Edit project".
+3. Il sistama mostra una form precompilata con i dati di base del progetto (nome e descrizione) attuali.
+4. L'utente modifica i dati e preme "Confirm".
+5. Il sistema valida i dati e li salva. Il sistema mostra all'utente la pagina di visualizzazione del proprio progetto con i dati aggiornati.
+
+-Aggiornare i dati di un mio progetto (estensioni)
+3a. I dati inseriti non sono validi (nome troppo corto o nome o descrizione troppo lunghe), il sistema invalida i dati e mostra nuovamente all'utente la pagina di form,
+	precompilata con i dati già immessi. Inoltre mostra gli errori.
+
+
+
+
+-- Cancellare un mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei prorpi progetti.
+2. Nella pagina di visualizzazione del proprio progetto l'utente clicca il bottone "Delete Project".
+3. Il sitema cancella il progetto, e riporta l'utente alla pagina con la lista dei propri progetti.
+
+
+
+
+-- Condividere un mio progetto con un altro utente (scenario principale di successo)
+1. L'utente loggato visualizza uno dei prorpi progetti.
+2. Nella pagina di visualizzazione del proprio progetto l'utente clicca il bottone "Share with another user".
+3. Nella pagina di visualizzazione del proprio progetto il sistema apre una form per inserire il nickname dell'utente con cui si vuole condividere il progetto.
+4. L'utente inserisce il nickname e preme "Share".
+5. Il sistema aggiunge l'utente alla lista degli utenti membri. Il sistema riporta alla pagina di viualizzazione aggiornata.
+
+-Condividere un mio progetto con un altro utente (estensioni)
+5a. Il nickname inserito non è valido (l'utente non esiste o è già membro). Il sistema mostra di nuovo la pagina di visualizzazione, non aggiornata. NOTA: l'errore è mostrato nella form di share, che dovrà
+	essere visualizzata di nuovo per vederlo.
+
+
+
+
+	
+	
+	
+	
+----------------- CASI D'USO TASK -------------------
+
+
+-- Aggiungere un nuovo task ad un mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei propri progetti.
+2. L'utente clicca il link "Add new task" in altro a destra sopra la lista dei task.
+3. Il sistama mostra una form per l'iserimento del task.
+4. L'utente inserisce nome e descrizione del task. L'utente preme il tasto "Confirm".
+5. Il sistama valida i dati e li salva. Il sistama riporta l'utente alla pagina di visualizzazione del progetto.
+
+-Aggiungere un task ad un mio progetto (estensioni)
+5a. I dati inseriti non sono validi (nome troppo corto o nome o descrizione troppo lunghi). Il sistama invalida i dati e riporta l'utente alla form, precompilata con
+	i dati inseriti, mostrando anche gli errori.
+	
+	
+
+-- Aggiornare un task di un mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei propri progetti.
+2. L'uente clicca il link "Edit" in alto a destra sopra uno dei task della lista.
+3. Il sistama mostra una form precompilata con i dati di base del task (nome e descrizione) attuali.
+4. L'utente modifica i dati e preme "Confirm".
+5. Il sistema valida i dati e li salva. Il sistema mostra all'utente la pagina di visualizzazione del proprio progetto con i dati aggiornati.
+
+-Aggiornare i dati di un mio progetto (estensioni)
+3a. I dati inseriti non sono validi (nome troppo corto o nome o descrizione troppo lunghe), il sistema invalida i dati e mostra nuovamente all'utente la pagina di form,
+	precompilata con i dati già immessi. Inoltre mostra gli errori.
+
+
+
+-- Cancellare un task da un mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei prorpi progetti.
+2. Nella pagina di visualizzazione del proprio progetto l'utente clicca il bottone "Delete" in alto a destra sopra uno dei task della lista.
+3. Il sitema cancella il task, e riporta l'utente alla pagina con la lista dei propri progetti.
+
+
+
+-- Assegnare un task di un mio progetto ad un utente che ha visibilità sul mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei prorpi progetti.
+2. Nella pagina di visualizzazione del proprio progetto l'utente clicca il bottone "Assign" in alto a destra sopra uno dei task della lista.
+3. Il sistama mostra la lista degli utenti membri del progetto (proprietario incluso).
+4. L'utente sceglie un membro cliccando sul nickname.
+5. Il sistama aggiorna l'assegnazione del task e salva i dati. Se il task era già assegnato all'utente, nulla cambierà, altrimenti verrà assegnato al nuovo utente,
+	sovrascrivendo un aventuale altro utente cui era assegnato.
+
+
+NOTA: Questo caso d'uso è valido sia per il proprietario di un progetto sia per i membri.
+-- Commentare un task di un progetto di cui ho visibilità (scenario principale di successo)
+1. L'utente visualizza un progetto (tra i propri, o tra quelli condivisi).
+2. Nella pagina di visualizzazione del progetto, l'utente scorre la lista dei task fino a quello che vuole commentare.
+3. L'utente clicca il tasto "Show Comments". 
+4. Il sitema apre sotto il task l'elenco dei commenti.
+5. L'utente clicca il tasto "Leave a comment" in cima alla lista di commenti. 
+6. Il sistama apre una form sotto il tasto in cui l'utente può scrivere il commento.
+7. L'utente inserisce il commento e preme "Confirm". Il sistama registra il commento e mostra all'utenta la pagina aggiornata.
+
+-- Commentare un task (estensioni)
+2-8a. L'utente clicca il tasto "Hide Comments" chiudendo l'area di commento.
+4-7a. L'utente clicca il tasto "Close" chiudendo la form di inserimento del commento.
+
+
+
+
+----------------- CASI D'USO TAG -------------------
+NOTA: I seguenti casi d'uso, tranne ove specificato, si riferiscono all'utente proprietario del progetto
+
+
+-- Aggiungere un tag ad un mio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei propri progetti.
+2. Nella pagina di visualizzazione del proprio porgetto, nella barra laterare dei tag l'utente clicca il bottone "Add new Tag".
+3. Il sistama mostra una form per l'iserimento del tag.
+4. L'utente inserisce nome e descrizione del tag, inoltre l'utente sceglie un colore per il tag da una lista di colori. L'utente preme il tasto "Confirm".
+5. Il sistama valida i dati e li salva. Il sistama riporta l'utente alla pagina di visualizzazione del progetto.
+
+-Aggiungere un tag ad un mio progetto (estensioni)
+5a. I dati inseriti non sono validi (nome troppo corto o nome o descrizione troppo lunghi). Il sistama invalida i dati e riporta l'utente alla form, precompilata con
+	i dati inseriti, mostrando anche gli errori.
+	
+	
+	
+-- Cancellare un tag dal proprio progetto (scenario principale di successo)
+1. L'utente loggato visualizza uno dei propri progetti.
+2. Nella pagina di visualizzazione del proprio porgetto, nella barra laterare dei tag l'utente clicca il simbolo "-" accanto al nome di un tag.
+3. Il sistema cancella il tag e visualizza la pagina del progetto aggiornata.
+
+
+
+-- Editare i tag di un task (scenario principale di successo)
+1. L'utente loggato visualizza uno dei propri progetti
+2. Nella pagina di visualizzazione del proprio progetto, l'utente clicca sul link "Tags" in alto a destra sopra un task nella lista dei task.
+3. Il sistema mostra all'utente una lista di tutti i tag del progetto, spuntando quelli che sono già assegnati al task (se ve ne sono).
+4. L'utente spunta un tag se vuole aggiungerlo al tag, toglie la spunta se vuole rimuoverlo.
+- L'utente ripete il passo 4 per tutti i tag che vuole aggiornare -
+5. L'utente clicca "Confirm". Il sistama aggiorna i dati, li salva, e riporta all'utente alla pagina di visualizzazione del progetto aggiornata.
+
+
+
+
+NOTA: Questo caso d'uso è valido sia per il proprietario di un progetto sia per i membri. 
+-- Visualizzare i task di un tag (scenario principale di successo)
+1. L'utente loggato visualizza un progetto (tra i propri, o tra quelli condivisi).
+2. L'utente clicca sul nome di uno dei tag nella lista dei tag della barra laterale, o sul nome di uno dei tag visualizzati sui task nella lista dei task.
+3. Il sistema mostra la lista dei task che hanno associato quel tag.
+4. Per ogni elemento della lista dei task, si può cliccare su uno dei tag visualizzati nei task e vedere la lista dei task associati a quel tag.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

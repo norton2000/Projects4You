@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -76,11 +77,18 @@ public class UserController {
 		if(credentials == null) {
 			return "redirect:/admin/users";
 		}
+		String redirecting = null;
 		User user = credentials.getUser();
+		if(user.equals(this.sessionData.getLoggedUser())) {
+			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+			redirecting = "/index";
+		}else {
+			redirecting = "redirect:/admin/users";
+		}
 		user.deleteSelf();
-		
 		this.credentialsService.deleteCredentials(username);
-		return "redirect:/admin/users";
+		
+		return redirecting;
 	}
 
     @GetMapping(value = {"/users/modify"})
